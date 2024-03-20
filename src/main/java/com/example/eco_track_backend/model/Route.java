@@ -20,4 +20,7 @@ public class Route {
 
     @OneToMany(mappedBy = "route")
     private List<User> userList = new ArrayList<>();
+
+    @ManyToOne
+    private TruckDriver truckDriver;
 }
