@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.model;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,12 +11,28 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@Entity
+@Table(name = "User_Details",uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String email;
     private String name;
     private String username;
     private String password;
-    private List<String> roles = new ArrayList<>();
+    private Integer age;
+    private String nic;
+    private Double latitude;
+    private Double longitude;
+    private String phone;
+
+    @Enumerated(EnumType.STRING)
+    private ROLES roles;
+
+    @ManyToOne
+    private Route route;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
