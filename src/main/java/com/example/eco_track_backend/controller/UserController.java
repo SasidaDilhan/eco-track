@@ -38,7 +38,7 @@ public class UserController {
         //authenticated user
         User user = new User();
         user.setUsername(requestDTO.getUsername());
-        user.setPassword("test123");
+        user.setPassword(requestDTO.getPassword());
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("username", user.getUsername());
         extraClaims.put("roles", roles);
