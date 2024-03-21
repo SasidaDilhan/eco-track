@@ -27,9 +27,7 @@ public class User implements UserDetails {
     private Double latitude;
     private Double longitude;
     private String phone;
-
-    @Enumerated(EnumType.STRING)
-    private ROLES roles;
+    private String role;
 
     @ManyToOne
     private Route route;

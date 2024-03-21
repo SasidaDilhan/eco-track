@@ -1,44 +1,45 @@
 package com.example.eco_track_backend.controller;
 
 import com.example.eco_track_backend.model.User;
+import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.request.UserAuthRequestDTO;
 import com.example.eco_track_backend.response.UserLoginResponseDTO;
 import com.example.eco_track_backend.security.JwtService;
 import jakarta.annotation.security.RolesAllowed;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-@AllArgsConstructor
 @RestController
+@AllArgsConstructor
 public class UserController {
 
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     @PostMapping("/authenticate")
     public UserLoginResponseDTO authenticate(@RequestBody UserAuthRequestDTO requestDTO) {
         System.out.println(" ====authenticate user " + requestDTO.getUsername());
 
+        User userOne = userRepository.findUserByEmail(requestDTO.getUsername()).orElseThrow(
+                () -> new EntityNotFoundException("User not available")
+        );
+
         List<String> roles = new ArrayList<>();
-        if (requestDTO.getUsername().equals("user1")) {
-            roles.add("ROLE_USER");
-        }
-        if (requestDTO.getUsername().equals("user2")) {
-            roles.addAll(List.of("ROLE_USER", "ROLE_ADMIN"));
+        if (requestDTO.getUsername().equals(userOne.getEmail())) {
+            roles.add("ROLE_"+userOne.getRole());
         }
 
         //authenticated user
         User user = new User();
         user.setUsername(requestDTO.getUsername());
-        user.setPassword(requestDTO.getPassword());
+        user.setPassword("test123");
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("username", user.getUsername());
         extraClaims.put("roles", roles);
@@ -50,6 +51,7 @@ public class UserController {
                 .build();
     }
 
+
     //    @RolesAllowed("ROLE_ADMIN")
     @RolesAllowed("ADMIN")
     @GetMapping("/admin")
@@ -59,10 +61,10 @@ public class UserController {
     }
 
     //    @RolesAllowed("ROLE_USER")
-    @RolesAllowed("USER")
+    @RolesAllowed("DRIVER")
     @GetMapping("/user")
     public String sayHiUser() {
 
-        return "Hi User";
+        return "Hi Driver";
     }
 }

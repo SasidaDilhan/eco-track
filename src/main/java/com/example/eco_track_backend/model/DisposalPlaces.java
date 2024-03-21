@@ -14,4 +14,8 @@ public class DisposalPlaces {
     private String name;
     private Double latitude;
     private Double longitude;
+
+
+    @ManyToOne
+    private Route route;
 }
