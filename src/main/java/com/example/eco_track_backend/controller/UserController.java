@@ -31,6 +31,7 @@ public class UserController {
                 () -> new EntityNotFoundException("User not available")
         );
 
+
         List<String> roles = new ArrayList<>();
         if (requestDTO.getUsername().equals(userOne.getEmail())) {
             roles.add("ROLE_"+userOne.getRole());
