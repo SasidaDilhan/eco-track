@@ -28,6 +28,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/authenticate")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/user")).permitAll();
+                    auth.requestMatchers(antMatchers(HttpMethod.GET, "/admin")).permitAll();
+                    auth.requestMatchers(antMatchers(HttpMethod.POST, "/truckdriver")).permitAll();
+                    auth.requestMatchers(antMatchers(HttpMethod.POST, "/")).permitAll();
                     auth.requestMatchers("/error/**").permitAll();
                     auth.requestMatchers("/api/auth/**").permitAll();
                     auth.anyRequest().authenticated();

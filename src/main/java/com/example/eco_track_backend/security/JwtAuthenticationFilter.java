@@ -44,15 +44,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         Map<String, Object> claims = jwtService.getAllClamsByToken(jwt);
         List<String> roles = Collections.emptyList();
         if (claims.get("roles") != null) {
-            roles = (List<String>) ((List<?>) claims.get("roles")).stream().toList();
+            roles = ((List<?>) claims.get("roles")).stream().map(Object::toString).collect(Collectors.toList());
         }
         System.out.println("roles " + roles);
         System.out.println("roles size " + roles.size());
+
         List<SimpleGrantedAuthority> authorities = roles
                 .stream()
-//                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                .map(role -> new SimpleGrantedAuthority( role))
+                .map(role -> new SimpleGrantedAuthority(role))
                 .collect(Collectors.toList());
+
+// Extract the role from claims
+        String additionalRole = (String) claims.get("role");
+
+// Add the additional role to authorities if it exists
+        if (additionalRole != null) {
+            authorities.add(new SimpleGrantedAuthority(additionalRole));
+        }
+
+        System.out.println("authorities " + authorities);
+
 
         System.out.println("user roles set up completed" + username);
         User user = new User(claims.get("username").toString(), "test123", authorities);

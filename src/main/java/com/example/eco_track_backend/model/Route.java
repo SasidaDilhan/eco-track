@@ -23,4 +23,7 @@ public class Route {
 
     @ManyToOne
     private TruckDriver truckDriver;
+
+    @OneToMany(mappedBy = "route")
+    private List<DisposalPlaces> disposalPlacesList = new ArrayList<>();
 }

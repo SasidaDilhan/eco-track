@@ -20,7 +20,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> new User(username, passwordEncoder().encode(null), Collections.emptyList());
+        return email -> new User(email, passwordEncoder().encode(null), Collections.emptyList());
     }
 
     @Bean
