@@ -8,7 +8,9 @@ import com.example.eco_track_backend.security.JwtService;
 import jakarta.annotation.security.RolesAllowed;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,8 +58,15 @@ public class UserController {
     //    @RolesAllowed("ROLE_ADMIN")
     @RolesAllowed("ADMIN")
     @GetMapping("/admin")
-    public String sayHiAdmin() {
+    public String sayHiAdmin(@NonNull HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        final String username;
 
+
+        jwt = authHeader.substring(7);
+        username = jwtService.extractUsername(jwt);
+        System.out.println(username);
         return "Hi Admin";
     }
 

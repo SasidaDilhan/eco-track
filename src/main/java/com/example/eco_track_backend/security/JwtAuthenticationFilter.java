@@ -41,13 +41,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         jwt = authHeader.substring(7);
         username = jwtService.extractUsername(jwt);
+
         Map<String, Object> claims = jwtService.getAllClamsByToken(jwt);
         List<String> roles = Collections.emptyList();
         if (claims.get("roles") != null) {
             roles = ((List<?>) claims.get("roles")).stream().map(Object::toString).collect(Collectors.toList());
         }
-        System.out.println("roles " + roles);
-        System.out.println("roles size " + roles.size());
+
 
         List<SimpleGrantedAuthority> authorities = roles
                 .stream()
