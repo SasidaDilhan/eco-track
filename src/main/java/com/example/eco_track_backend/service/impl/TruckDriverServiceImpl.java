@@ -21,5 +21,6 @@ public class TruckDriverServiceImpl implements TruckDriverService {
         TruckDriver truckDriver = modelMapper.map(truckDriverRequestDTO, TruckDriver.class);
         truckDriverRepository.save(truckDriver);
         return ResponseEntity.ok(truckDriverRequestDTO);
+
     }
 }
