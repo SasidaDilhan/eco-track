@@ -1,9 +1,6 @@
 package com.example.eco_track_backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -15,11 +12,14 @@ import java.util.List;
 public class TruckDriver {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private String licenceNumber;
     private String phone;
     private String nic;
     private Integer age;
+    private String role;
 
     @OneToMany(mappedBy = "truckDriver")
     private List<Route> routeList = new ArrayList<>();

@@ -62,7 +62,7 @@ public class UserController {
 
     //    @RolesAllowed("ROLE_USER")
     @RolesAllowed("DRIVER")
-    @GetMapping("/user")
+    @GetMapping("/driver")
     public String sayHiUser() {
 
         return "Hi Driver";
