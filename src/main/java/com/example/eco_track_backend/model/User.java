@@ -32,6 +32,9 @@ public class User implements UserDetails {
     @ManyToOne
     private Route route;
 
+    @OneToMany(mappedBy = "user")
+    private List<Notice> noticeList;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> roles = new ArrayList<>();
