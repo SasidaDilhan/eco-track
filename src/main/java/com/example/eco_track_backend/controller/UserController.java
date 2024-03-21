@@ -67,6 +67,15 @@ public class UserController {
         jwt = authHeader.substring(7);
         username = jwtService.extractUsername(jwt);
         System.out.println(username);
+
+        Optional<User> userOptional = userRepository.findUserByEmail(username);
+
+        if (userOptional.isPresent()){
+            User user = userOptional.get();
+            return "Hi "+ user.getName();
+        }
+
+
         return "Hi Admin";
     }
 
