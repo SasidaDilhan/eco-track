@@ -21,19 +21,20 @@ public class RouteController {
     private final RouteService routeService;
 
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/route", headers = "VERSION=V1")
-    public ResponseEntity<String> addRoute(@RequestBody RouteRequestDTO routeRequestDTO) throws TruckDriverNotFoundException {
+    @PostMapping(value = "/route/{route_id}", headers = "VERSION=V1")
+    public ResponseEntity<String> addRoute(@RequestBody RouteRequestDTO routeRequestDTO, @PathVariable("route_id") Long id) throws TruckDriverNotFoundException {
 
-        routeService.createRoute(routeRequestDTO);
+        routeService.createRoute(routeRequestDTO, id);
         return ResponseEntity.status(HttpStatus.CREATED).body("Route Created!");
     }
 
     @RolesAllowed("ADMIN")
-    @GetMapping(value = "/routes", headers = "VERSION=V1")
+    @GetMapping(value = "/route", headers = "VERSION=V1")
     public ResponseEntity<List<RouteResponseDTO>> getAll() throws RouteNotFoundException {
 
         List<RouteResponseDTO> routeResponseList = routeService.getAllRoutes();
         return new ResponseEntity<>(routeResponseList, HttpStatus.OK);
 
     }
+
 }
