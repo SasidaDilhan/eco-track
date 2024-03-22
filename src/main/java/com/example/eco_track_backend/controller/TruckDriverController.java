@@ -5,6 +5,7 @@ import com.example.eco_track_backend.model.User;
 import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.request.TruckDriverRequestDTO;
 import com.example.eco_track_backend.service.TruckDriverService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class TruckDriverController {
     private UserRepository userRepository;
 
 
+    @RolesAllowed("ADMIN")
     @PostMapping("/truckdriver")
     public ResponseEntity<TruckDriverRequestDTO> create(@RequestBody TruckDriverRequestDTO truckDriverRequestDTO) {
 
