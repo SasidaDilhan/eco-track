@@ -32,6 +32,9 @@ public class TruckDriverRequestDTO {
     @Size(min = 18, max = 99, message = "Age must be between 18 and 99")
     private Integer age;
 
+    private String password;
+    private String email;
+
     @NotNull(message = "Role cannot be null")
     @Enumerated(EnumType.STRING)
     private ROLES role;

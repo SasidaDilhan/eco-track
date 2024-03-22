@@ -16,6 +16,8 @@ public class TruckDriver {
     private Long id;
     private String name;
     private String licenceNumber;
+    private String email;
+    private String password;
     private String phone;
     private String nic;
     private Integer age;
