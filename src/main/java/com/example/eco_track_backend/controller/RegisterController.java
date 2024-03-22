@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterController {
     private final UserRegisterService userRegisterService;
 
-    @PostMapping("/")
-    public ResponseEntity<ResponseEntity<User>> createUser(@RequestBody UserRegisterRequestDTO userRegisterRequestDTO){
+    @PostMapping(value = "/register", headers = "VERSION=V1")
+    public ResponseEntity<ResponseEntity<User>> createUser(@RequestBody UserRegisterRequestDTO userRegisterRequestDTO) {
 
         return ResponseEntity.ok(userRegisterService.saveUser(userRegisterRequestDTO));
     }
