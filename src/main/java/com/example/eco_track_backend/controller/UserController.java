@@ -11,10 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -22,61 +20,36 @@ import java.util.*;
 @AllArgsConstructor
 public class UserController {
 
-    private final JwtService jwtService;
     private final UserRepository userRepository;
-
-    @PostMapping("/authenticate")
-    public UserLoginResponseDTO authenticate(@RequestBody UserAuthRequestDTO requestDTO) {
-        System.out.println(" ====authenticate user " + requestDTO.getUsername());
-
-        User userOne = userRepository.findUserByEmail(requestDTO.getUsername()).orElseThrow(
-                () -> new EntityNotFoundException("User not available")
-        );
-
-
-        List<String> roles = new ArrayList<>();
-        if (requestDTO.getUsername().equals(userOne.getEmail())) {
-            roles.add("ROLE_"+userOne.getRole());
-        }
-
-        //authenticated user
-        User user = new User();
-        user.setUsername(requestDTO.getUsername());
-        user.setPassword("test123");
-        Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("username", user.getUsername());
-        extraClaims.put("roles", roles);
-        extraClaims.put("name", user.getName());
-
-        String token = jwtService.generateToken(user, extraClaims);
-        return UserLoginResponseDTO.builder()
-                .token(token)
-                .build();
-    }
-
+    private final PasswordEncoder passwordEncoder;
 
     //    @RolesAllowed("ROLE_ADMIN")
     @RolesAllowed("ADMIN")
     @GetMapping("/admin")
-    public String sayHiAdmin(@NonNull HttpServletRequest request) {
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String username;
-
-
-        jwt = authHeader.substring(7);
-        username = jwtService.extractUsername(jwt);
-        System.out.println(username);
-
-        Optional<User> userOptional = userRepository.findUserByEmail(username);
-
-        if (userOptional.isPresent()){
-            User user = userOptional.get();
-            return "Hi "+ user.getName();
-        }
-
+    public String sayHiAdmin() {
 
         return "Hi Admin";
+    }
+
+    @RolesAllowed("ADMIN")
+    @GetMapping("/admin/{id}/{password}")
+    public void getAdminPassword(@PathVariable Long id,@PathVariable String password) {
+
+        Optional<User> userOpt = userRepository.findById(id);
+        String encodedPassword = passwordEncoder.encode(password);
+
+        if (userOpt.isPresent()){
+            User user = userOpt.get();
+            String userPasword = user.getPassword();
+            System.out.println(user.getPassword());
+            System.out.println(encodedPassword);
+            if (passwordEncoder.matches(userPasword, encodedPassword)){
+                System.out.println("pasword match");
+            }else {
+                System.out.println("not match");
+            }
+        }
+
     }
 
     //    @RolesAllowed("ROLE_USER")
@@ -86,4 +59,6 @@ public class UserController {
 
         return "Hi Driver";
     }
+
+
 }
