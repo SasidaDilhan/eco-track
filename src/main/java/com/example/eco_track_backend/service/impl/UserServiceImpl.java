@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.service.impl;
 
+import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.User;
 import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.response.UserResponseDTO;
@@ -20,9 +21,13 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<UserResponseDTO> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers()throws UserNotFonudException {
 
         List<User> userList = userRepository.findAll();
+
+        if (userList.isEmpty()){
+            throw new UserNotFonudException("User List Empty!");
+        }
 
         return userList.stream()
                 .map(users -> modelMapper.map(users, UserResponseDTO.class))
