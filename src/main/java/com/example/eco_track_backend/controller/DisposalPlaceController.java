@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,14 +19,15 @@ public class DisposalPlaceController {
 
     private final DisposalPlaceService disposalPlaceService;
 
+
     public ResponseEntity<DisposalPlaceResponseDTO> addDisposalPlace(@RequestBody DisposalPlacesRequestDTO disposalPlacesRequestDTO, Authentication authentication) throws UserNotFonudException {
 
         User user = (User) authentication.getPrincipal();
 
         String email = user.getUsername();
 
-        DisposalPlaceResponseDTO disposalPlacesRequestDTO1 = disposalPlaceService.addDisposalPlace(disposalPlacesRequestDTO,email);
+        DisposalPlaceResponseDTO disposalPlaceResponseDTO = disposalPlaceService.addDisposalPlace(disposalPlacesRequestDTO,email);
 
-        return new ResponseEntity<>(disposalPlacesRequestDTO1, HttpStatus.OK);
+        return new ResponseEntity<>(disposalPlaceResponseDTO, HttpStatus.OK);
     }
 }

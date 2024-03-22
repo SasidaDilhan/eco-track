@@ -34,6 +34,8 @@ public class SecurityConfiguration {
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/truckdriver")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/report/**")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/admins/notices")).permitAll();
+                    auth.requestMatchers(antMatchers(HttpMethod.POST, "/users/store_items")).permitAll();
+
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/")).permitAll();
                     auth.requestMatchers("/error/**").permitAll();
                     auth.requestMatchers("/api/auth/**").permitAll();
