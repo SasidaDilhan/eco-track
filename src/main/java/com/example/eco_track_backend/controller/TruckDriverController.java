@@ -5,15 +5,13 @@ import com.example.eco_track_backend.exceptions.TruckDriverNotFoundException;
 import com.example.eco_track_backend.model.User;
 import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.request.TruckDriverRequestDTO;
+import com.example.eco_track_backend.response.RouteResponseDTO;
 import com.example.eco_track_backend.service.TruckDriverService;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,8 +30,16 @@ public class TruckDriverController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Truck Driver Created!");
     }
 
-    @GetMapping(value = "/user", headers = "VERSION=V1")
+    @GetMapping(value = "/truckdriver", headers = "VERSION=V1")
     public List<User> get() {
         return userRepository.findAll();
+    }
+
+    @RolesAllowed("ADMIN")
+    @GetMapping(value = "/truckdriver/{driver_id}", headers = "VERSION=V1")
+    public ResponseEntity<List<RouteResponseDTO>> getRoutesByDriver(@PathVariable("driver_id") Long id) {
+        List<RouteResponseDTO> routeResponseDTOList = truckDriverService.findByDriver(id);
+
+        return new ResponseEntity<>(routeResponseDTOList, HttpStatus.OK);
     }
 }

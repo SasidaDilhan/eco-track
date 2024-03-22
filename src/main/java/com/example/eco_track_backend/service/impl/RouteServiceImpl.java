@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,10 +26,10 @@ public class RouteServiceImpl implements RouteService {
     private final ModelMapper modelMapper;
 
     @Override
-    public void createRoute(RouteRequestDTO routeRequestDTO) throws TruckDriverNotFoundException {
+    public void createRoute(RouteRequestDTO routeRequestDTO, Long id) throws TruckDriverNotFoundException {
 
-        TruckDriver truckDriver = truckDriverRepository.findById((7L)).orElseThrow(
-                ()-> new TruckDriverNotFoundException("Truck Driver Not Found!")
+        TruckDriver truckDriver = truckDriverRepository.findById(id).orElseThrow(
+                () -> new TruckDriverNotFoundException("Truck Driver Not Found!")
         );
 
         Route route = modelMapper.map(routeRequestDTO, Route.class);
@@ -48,4 +49,5 @@ public class RouteServiceImpl implements RouteService {
                 .map(routes -> modelMapper.map(routes, RouteResponseDTO.class))
                 .collect(Collectors.toList());
     }
+
 }

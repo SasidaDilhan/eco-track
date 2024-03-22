@@ -10,7 +10,8 @@ import java.util.List;
 
 @Service
 public interface RouteService {
-    void createRoute(RouteRequestDTO routeRequestDTO) throws TruckDriverNotFoundException;
+    void createRoute(RouteRequestDTO routeRequestDTO, Long id) throws TruckDriverNotFoundException;
 
     List<RouteResponseDTO> getAllRoutes( )throws RouteNotFoundException;
+
 }
