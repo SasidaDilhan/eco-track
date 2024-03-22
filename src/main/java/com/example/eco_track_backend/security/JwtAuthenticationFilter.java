@@ -66,6 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
         System.out.println("user roles set up completed" + username);
+
         User user = new User(claims.get("username").toString(), "test123", authorities);
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 user,

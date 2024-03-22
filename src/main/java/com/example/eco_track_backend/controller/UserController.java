@@ -1,20 +1,23 @@
 package com.example.eco_track_backend.controller;
 
+import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.User;
 import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.request.UserAuthRequestDTO;
 import com.example.eco_track_backend.response.UserLoginResponseDTO;
+import com.example.eco_track_backend.response.UserResponseDTO;
 import com.example.eco_track_backend.security.JwtService;
+import com.example.eco_track_backend.service.UserService;
 import jakarta.annotation.security.RolesAllowed;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -22,68 +25,33 @@ import java.util.*;
 @AllArgsConstructor
 public class UserController {
 
-    private final JwtService jwtService;
-    private final UserRepository userRepository;
-
-    @PostMapping("/authenticate")
-    public UserLoginResponseDTO authenticate(@RequestBody UserAuthRequestDTO requestDTO) {
-        System.out.println(" ====authenticate user " + requestDTO.getUsername());
-
-        User userOne = userRepository.findUserByEmail(requestDTO.getUsername()).orElseThrow(
-                () -> new EntityNotFoundException("User not available")
-        );
-
-
-        List<String> roles = new ArrayList<>();
-        if (requestDTO.getUsername().equals(userOne.getEmail())) {
-            roles.add("ROLE_"+userOne.getRole());
-        }
-
-        //authenticated user
-        User user = new User();
-        user.setUsername(requestDTO.getUsername());
-        user.setPassword("test123");
-        Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("username", user.getUsername());
-        extraClaims.put("roles", roles);
-        extraClaims.put("name", user.getName());
-
-        String token = jwtService.generateToken(user, extraClaims);
-        return UserLoginResponseDTO.builder()
-                .token(token)
-                .build();
-    }
+    private final UserService userService;
 
 
     //    @RolesAllowed("ROLE_ADMIN")
     @RolesAllowed("ADMIN")
-    @GetMapping("/admin")
-    public String sayHiAdmin(@NonNull HttpServletRequest request) {
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String username;
-
-
-        jwt = authHeader.substring(7);
-        username = jwtService.extractUsername(jwt);
-        System.out.println(username);
-
-        Optional<User> userOptional = userRepository.findUserByEmail(username);
-
-        if (userOptional.isPresent()){
-            User user = userOptional.get();
-            return "Hi "+ user.getName();
-        }
-
+    @GetMapping(value = "/admin",headers = "VERSION=V1")
+    public String sayHiAdmin() {
 
         return "Hi Admin";
     }
 
+
+
     //    @RolesAllowed("ROLE_USER")
     @RolesAllowed("DRIVER")
-    @GetMapping("/driver")
+    @GetMapping(value = "/driver",headers = "VERSION=V1")
     public String sayHiUser() {
 
         return "Hi Driver";
     }
+
+    @RolesAllowed("ADMIN")
+    @GetMapping(value = "/users",headers = "VERSION=V1")
+    public ResponseEntity<List<UserResponseDTO>> allUsers()throws UserNotFonudException {
+        List<UserResponseDTO> userResponseDTO = userService.getAllUsers();
+        return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
+    }
+
+
 }

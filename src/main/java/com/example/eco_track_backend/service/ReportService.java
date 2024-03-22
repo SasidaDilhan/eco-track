@@ -1,7 +1,9 @@
 package com.example.eco_track_backend.service;
 
 import com.example.eco_track_backend.model.TruckDriver;
+import com.example.eco_track_backend.model.User;
 import com.example.eco_track_backend.repository.TruckDriverRepository;
+import com.example.eco_track_backend.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -20,11 +22,12 @@ import java.util.Map;
 public class ReportService {
 
     private final TruckDriverRepository truckDriverRepository;
+    private final UserRepository userRepository;
     public String exportReport(String reportFormat) throws FileNotFoundException, JRException {
 
         String path = "C:\\Users\\Bad-Boy\\OneDrive - Sri Lanka Institute of Information Technology\\Desktop\\reports";
 
-        List<TruckDriver> truckDriverList = truckDriverRepository.findAll();
+        List<User> truckDriverList = userRepository.findAll();
 
         //load File
         File file = ResourceUtils.getFile("classpath:driver.jrxml");
@@ -39,11 +42,11 @@ public class ReportService {
 
         if (reportFormat.equalsIgnoreCase("html")){
 
-            JasperExportManager.exportReportToHtmlFile(jasperPrint,path+"\\TruckDriver.html");
+            JasperExportManager.exportReportToHtmlFile(jasperPrint,path+"\\User.html");
         }
         if (reportFormat.equalsIgnoreCase("pdf")){
 
-            JasperExportManager.exportReportToPdfFile(jasperPrint, path+"\\TruckDriver.pdf");
+            JasperExportManager.exportReportToPdfFile(jasperPrint, path+"\\User.pdf");
         }
 
         return "Report Generated in path : "+path;
