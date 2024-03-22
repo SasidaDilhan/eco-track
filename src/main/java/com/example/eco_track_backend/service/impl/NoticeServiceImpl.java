@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
@@ -23,12 +25,14 @@ public class NoticeServiceImpl implements NoticeService {
 
 
 
-  public void createNotice(NoticeRequestDto noticeRequestDto,User user){
+  public void createNotice(NoticeRequestDto noticeRequestDto, String email)throws UserNotFonudException{
 
+      User user = userRepository.findUserByEmail(email).orElseThrow(
+              ()-> new UsernameNotFoundException("that email not found")
+      );
       Notice notice = modelMapper.map(noticeRequestDto,Notice.class);
 
       notice.setUser(user);
-
       noticeRepository.save(notice);
   }
 }
