@@ -29,6 +29,6 @@ public class DisposalPlaceServiceImpl implements DisposalPlaceService {
 
         DisposalPlaces disposalPlaces = modelMapper.map(disposalPlacesRequestDTO,DisposalPlaces.class);
 
-        disposalPlaces.
+        return null;
     }
 }
