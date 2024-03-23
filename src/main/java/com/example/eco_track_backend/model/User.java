@@ -20,6 +20,7 @@ public class User implements UserDetails {
     private Long id;
     private String email;
     private String name;
+    private String username;
     private String password;
     private Integer age;
     private String nic;
@@ -50,6 +51,10 @@ public class User implements UserDetails {
         return password;
     }
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
