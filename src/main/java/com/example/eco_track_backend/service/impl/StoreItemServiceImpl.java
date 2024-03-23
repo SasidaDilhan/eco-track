@@ -76,4 +76,33 @@ public class StoreItemServiceImpl implements StoreItemService {
 
         return storeItemResponseDTOList;
     }
+
+    public List<StoreItemResponseDTO> getSpecificUserItems(Long userId)throws UserNotFonudException,StoreItemNotFoundException{
+
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new UserNotFonudException("That use not in a Database")
+        );
+
+        List<StoreItem> storeItemList = storeItemRepository.findStoreItemsByUserId(user.getId());
+
+        if (storeItemList.isEmpty()) {
+            throw new StoreItemNotFoundException("store items not in a database");
+        };
+
+        List<StoreItemResponseDTO> storeItemResponseDTOList = new ArrayList<>();
+
+        for (StoreItem storeItem : storeItemList){
+
+            StoreItemResponseDTO storeItemResponseDTO = new StoreItemResponseDTO();
+
+            storeItemResponseDTO.setId(storeItem.getId());
+            storeItemResponseDTO.setName(storeItem.getName());
+            storeItemResponseDTO.setQuantity(storeItem.getQuantity());
+            storeItemResponseDTO.setUser(storeItem.getUser().getId());
+
+            storeItemResponseDTOList.add(storeItemResponseDTO);
+        }
+
+        return storeItemResponseDTOList;
+    }
 }
