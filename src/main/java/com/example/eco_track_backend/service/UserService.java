@@ -10,4 +10,6 @@ import java.util.List;
 @Service
 public interface UserService {
     List<UserResponseDTO> getAllUsers() throws UserNotFonudException;
+
+    List<UserResponseDTO> getUserByEmail(String email);
 }
