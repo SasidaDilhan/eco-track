@@ -53,5 +53,12 @@ public class UserController {
         return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
     }
 
+    @RolesAllowed("ADMIN")
+    @GetMapping(value = "/users/{email}", headers = "VERSION=V1")
+    public ResponseEntity<List<UserResponseDTO>> getUserByEmail(@PathVariable String email) throws UserNotFonudException {
+        List<UserResponseDTO> userResponseDTO = userService.getUserByEmail(email);
+        return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
+    }
+
 
 }
