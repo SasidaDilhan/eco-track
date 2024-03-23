@@ -7,6 +7,10 @@ import com.example.eco_track_backend.request.StoreItemRequestDTO;
 import com.example.eco_track_backend.response.StoreItemResponseDTO;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface StoreItemService {
     ResponseEntity<StoreItem> addStoreItem(StoreItemRequestDTO storeItemRequestDTO, String email)throws StoreItemNotFoundException, UserNotFonudException;
+
+    List<StoreItemResponseDTO> getAllItems()throws StoreItemNotFoundException;
 }
