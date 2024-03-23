@@ -8,13 +8,14 @@ import com.example.eco_track_backend.response.StoreItemResponseDTO;
 import com.example.eco_track_backend.service.StoreItemService;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.Store;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class StoreItemController {
     private  StoreItemService storeItemService;
 
     @RolesAllowed("USER")
-    @PostMapping("/users/store_items")
+    @PostMapping(value = "/users/store_items",headers = "VERSION=V1")
     public ResponseEntity<String> addStoreItem(@RequestBody StoreItemRequestDTO storeItemRequestDTO, Authentication authentication) throws StoreItemNotFoundException, UserNotFonudException {
 
         User user = (User) authentication.getPrincipal();
@@ -36,6 +37,22 @@ public class StoreItemController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body("item stored");
 
+    }
+    @RolesAllowed("ADMIN")
+    @GetMapping(value = "/users/store_items",headers = "VERSION=V1")
+    public List<StoreItemResponseDTO> getAllItem()throws StoreItemNotFoundException{
+
+        return storeItemService.getAllItems();
+    }
+
+
+
+    @GetMapping(value = "/users/{user_id}/store_items",headers = "VERSION=V1")
+    public List<StoreItemResponseDTO> getSpecificUserItems(@PathVariable("user_id")Long userId) throws UserNotFonudException, StoreItemNotFoundException {
+
+      return storeItemService.getSpecificUserItems(userId);
 
     }
+
+
 }

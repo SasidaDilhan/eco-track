@@ -11,6 +11,8 @@ import com.example.eco_track_backend.response.RouteResponseDTO;
 import com.example.eco_track_backend.service.RouteService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +50,16 @@ public class RouteServiceImpl implements RouteService {
         return routeList.stream()
                 .map(routes -> modelMapper.map(routes, RouteResponseDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ResponseEntity<Route> createRouteFirst(RouteRequestDTO routeRequestDTO) {
+
+        Route route = modelMapper.map(routeRequestDTO,Route.class);
+
+        routeRepository.save(route);
+
+        return new ResponseEntity<>(route, HttpStatus.CREATED);
     }
 
 }

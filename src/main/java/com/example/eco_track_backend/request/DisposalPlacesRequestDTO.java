@@ -1,7 +1,6 @@
 package com.example.eco_track_backend.request;
 
 import com.example.eco_track_backend.model.Route;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
