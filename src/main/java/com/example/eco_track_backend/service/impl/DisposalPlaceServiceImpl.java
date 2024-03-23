@@ -29,7 +29,7 @@ public class DisposalPlaceServiceImpl implements DisposalPlaceService {
 
 
 
-    public ResponseEntity<DisposalPlaces> addDisposalPlace(DisposalPlacesRequestDTO disposalPlacesRequestDTO,Long routeId)throws RouteNotFoundException {
+    public DisposalPlaceResponseDTO addDisposalPlace(DisposalPlacesRequestDTO disposalPlacesRequestDTO,Long routeId)throws RouteNotFoundException {
 
         Route route = routeRepository.findById(routeId).orElseThrow(
                 ()-> new RouteNotFoundException("that route not in a database")
@@ -41,7 +41,15 @@ public class DisposalPlaceServiceImpl implements DisposalPlaceService {
 
         disposalPlaceRepository.save(disposalPlaces);
 
-        return new ResponseEntity<>(disposalPlaces, HttpStatus.CREATED);
+       return DisposalPlaceResponseDTO.builder()
+                .id(disposalPlaces.getId())
+                .latitude(disposalPlaces.getLatitude())
+                .longitude(disposalPlaces.getLongitude())
+                .name(disposalPlaces.getName())
+               .route(disposalPlaces.getRoute().getId()).build();
+
+
+
 
     }
 
