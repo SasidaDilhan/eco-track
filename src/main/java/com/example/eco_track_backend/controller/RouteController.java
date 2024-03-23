@@ -3,6 +3,7 @@ package com.example.eco_track_backend.controller;
 
 import com.example.eco_track_backend.exceptions.RouteNotFoundException;
 import com.example.eco_track_backend.exceptions.TruckDriverNotFoundException;
+import com.example.eco_track_backend.model.Route;
 import com.example.eco_track_backend.request.RouteRequestDTO;
 import com.example.eco_track_backend.response.RouteResponseDTO;
 import com.example.eco_track_backend.service.RouteService;
@@ -19,6 +20,12 @@ import java.util.List;
 public class RouteController {
 
     private final RouteService routeService;
+    @RolesAllowed("ADMIN")
+    @PostMapping(value = "/routes", headers = "VERSION=V1")
+    public ResponseEntity<ResponseEntity<Route>> createRouteFirst(@RequestBody RouteRequestDTO routeRequestDTO){
+
+        return ResponseEntity.ok(routeService.createRouteFirst(routeRequestDTO));
+    }
 
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/route/{route_id}", headers = "VERSION=V1")
