@@ -37,6 +37,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/users/store_items")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/routes/{route_id}/disposalPlaces")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "routes")).permitAll();
+                    auth.requestMatchers(antMatchers(HttpMethod.GET, "routes/users/store_items")).permitAll();
 
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/register")).permitAll();
