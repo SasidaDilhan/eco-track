@@ -2,9 +2,11 @@ package com.example.eco_track_backend.response;
 
 import com.example.eco_track_backend.model.Route;
 import jakarta.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class DisposalPlaceResponseDTO {
 
     private Long id;
@@ -13,5 +15,5 @@ public class DisposalPlaceResponseDTO {
     private Double longitude;
 
 
-    private Route route;
+    private Long route;
 }
