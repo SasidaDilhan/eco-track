@@ -19,4 +19,6 @@ public interface RouteService {
     ResponseEntity<Route> createRouteFirst(RouteRequestDTO routeRequestDTO);
 
     RouteResponseDTO deleteSpecificRoute(Long routeId)throws RouteNotFoundException;
+
+    RouteResponseDTO getSpecificRoute(Long routeId)throws RouteNotFoundException;
 }

@@ -1,4 +1,5 @@
 package com.example.eco_track_backend.exceptions.AppHandler;
+import com.example.eco_track_backend.exceptions.AllException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.response.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class AppControllerAdvice {
 
-    @ExceptionHandler(UserNotFonudException.class)
+    @ExceptionHandler(AllException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleUserNotFoundException(UserNotFonudException ex) {
+    public ErrorResponse handleNotFoundException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setMessage(exception.getMessage());
         return errorResponse;
 
     }

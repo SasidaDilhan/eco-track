@@ -48,6 +48,13 @@ public class RouteController {
     }
 
     @RolesAllowed("ADMIN")
+    @GetMapping(value = "/routes/{route_id}",headers = "VERSION=V1")
+    public RouteResponseDTO getSpecificRoute(@PathVariable("route_id")Long routeId)throws RouteNotFoundException{
+
+        return routeService.getSpecificRoute(routeId);
+    }
+
+    @RolesAllowed("ADMIN")
     @DeleteMapping(value = "/routes/{route_id}",headers = "VERSION=V1")
     public RouteResponseDTO deleteSpecificRoute(@PathVariable("route_id")Long routeId)throws RouteNotFoundException{
 
