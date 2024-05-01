@@ -1,11 +1,14 @@
 package com.example.eco_track_backend.service.impl;
 
 import com.example.eco_track_backend.exceptions.TruckDriverNotFoundException;
+import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.Route;
 import com.example.eco_track_backend.model.TruckDriver;
+import com.example.eco_track_backend.model.User;
 import com.example.eco_track_backend.repository.TruckDriverRepository;
 import com.example.eco_track_backend.request.TruckDriverRequestDTO;
 import com.example.eco_track_backend.response.RouteResponseDTO;
+import com.example.eco_track_backend.response.UserResponseDTO;
 import com.example.eco_track_backend.service.TruckDriverService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -54,4 +57,16 @@ public class TruckDriverServiceImpl implements TruckDriverService {
         }
         return null;
     }
+//    public List<TruckDriverRequestDTO> getAllUsers() throws UserNotFonudException {
+//
+//        List<TruckDriver> userList = truckDriverRepository.findAll();
+//
+//        if (userList.isEmpty()) {
+//            throw new UserNotFonudException("User List Empty!");
+//        }
+//
+//        return userList.stream()
+//                .map(users -> modelMapper.map(users, UserResponseDTO.class))
+//                .collect(Collectors.toList());
+//    }
 }

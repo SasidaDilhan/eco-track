@@ -2,7 +2,9 @@ package com.example.eco_track_backend.controller;
 
 
 import com.example.eco_track_backend.exceptions.TruckDriverNotFoundException;
+import com.example.eco_track_backend.model.TruckDriver;
 import com.example.eco_track_backend.model.User;
+import com.example.eco_track_backend.repository.TruckDriverRepository;
 import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.request.TruckDriverRequestDTO;
 import com.example.eco_track_backend.response.RouteResponseDTO;
@@ -21,6 +23,7 @@ import java.util.List;
 public class TruckDriverController {
 
     private final TruckDriverService truckDriverService;
+    private final TruckDriverRepository truckDriverRepository;
     private UserRepository userRepository;
 
 
@@ -33,8 +36,8 @@ public class TruckDriverController {
 
     @RolesAllowed("ADMIN")
     @GetMapping(value = "/truckdriver", headers = "VERSION=V1")
-    public List<User> get() {
-        return userRepository.findAll();
+    public List<TruckDriver> get() {
+        return truckDriverRepository.findAll();
     }
 
     @RolesAllowed("ADMIN")
