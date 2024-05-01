@@ -36,4 +36,6 @@ public class UserRegisterRequestDTO {
     @NotNull(message = "Role cannot be null")
     @Enumerated(EnumType.STRING)
     private ROLES role;
+
+    private String email;
 }

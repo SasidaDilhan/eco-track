@@ -62,4 +62,43 @@ public class RouteServiceImpl implements RouteService {
         return new ResponseEntity<>(route, HttpStatus.CREATED);
     }
 
+    @Override
+    public RouteResponseDTO deleteSpecificRoute(Long routeId) throws RouteNotFoundException {
+
+        Route route = routeRepository.findById(routeId).orElseThrow(
+                ()-> new RouteNotFoundException("that route not in a database")
+        );
+
+        routeRepository.deleteById(route.getId());
+
+        RouteResponseDTO routeResponseDTO = new RouteResponseDTO();
+
+        routeResponseDTO.setLatitude(route.getLatitude());
+        routeResponseDTO.setLongitude(route.getLongitude());
+        routeResponseDTO.setName(route.getName());
+        routeResponseDTO.setId(route.getId());
+
+        return routeResponseDTO;
+    }
+
+    @Override
+    public RouteResponseDTO getSpecificRoute(Long routeId)throws RouteNotFoundException {
+
+        Route route = routeRepository.findById(routeId).orElseThrow(
+                ()-> new RouteNotFoundException("That route not in a Database")
+        );
+
+
+
+        RouteResponseDTO routeResponseDTO = new RouteResponseDTO();
+
+        routeResponseDTO.setLatitude(route.getLatitude());
+        routeResponseDTO.setLongitude(route.getLongitude());
+        routeResponseDTO.setName(route.getName());
+        routeResponseDTO.setId(route.getId());
+
+        return routeResponseDTO;
+
+    }
+
 }
