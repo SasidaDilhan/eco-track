@@ -39,4 +39,11 @@ public class TruckDriverRequestDTO {
     @NotNull(message = "Role cannot be null")
     @Enumerated(EnumType.STRING)
     private ROLES role;
+
+
+    private String addressLine1;
+    private String addressLine2;
+    private String city;
+    private String state;
+    private Long zip;
 }
