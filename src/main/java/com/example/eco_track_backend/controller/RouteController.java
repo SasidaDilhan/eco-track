@@ -11,6 +11,7 @@ import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,13 +28,15 @@ public class RouteController {
         return ResponseEntity.ok(routeService.createRouteFirst(routeRequestDTO));
     }
 
-    @RolesAllowed("ADMIN")
-    @PostMapping(value = "/route/{route_id}", headers = "VERSION=V1")
-    public ResponseEntity<String> addRoute(@RequestBody RouteRequestDTO routeRequestDTO, @PathVariable("route_id") Long id) throws TruckDriverNotFoundException {
+//    @RolesAllowed("ADMIN")
+//    @PostMapping(value = "/route/{route_id}", headers = "VERSION=V1")
+//    public ResponseEntity<String> addRoute(@RequestBody RouteRequestDTO routeRequestDTO, @PathVariable("route_id") Long id) throws TruckDriverNotFoundException {
+//
+//        routeService.createRoute(routeRequestDTO, id);
+//        return ResponseEntity.status(HttpStatus.CREATED).body("Route Created!");
+//    }
 
-        routeService.createRoute(routeRequestDTO, id);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Route Created!");
-    }
+
 
     @RolesAllowed("ADMIN")
     @GetMapping(value = "/route", headers = "VERSION=V1")
@@ -42,6 +45,13 @@ public class RouteController {
         List<RouteResponseDTO> routeResponseList = routeService.getAllRoutes();
         return new ResponseEntity<>(routeResponseList, HttpStatus.OK);
 
+    }
+
+    @RolesAllowed("ADMIN")
+    @DeleteMapping(value = "/routes/{route_id}",headers = "VERSION=V1")
+    public RouteResponseDTO deleteSpecificRoute(@PathVariable("route_id")Long routeId)throws RouteNotFoundException{
+
+        return routeService.deleteSpecificRoute(routeId);
     }
 
 }
