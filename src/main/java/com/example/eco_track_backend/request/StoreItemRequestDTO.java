@@ -10,14 +10,13 @@ import lombok.Data;
 @Data
 public class StoreItemRequestDTO {
 
-    @NotNull(message = "ID cannot be null")
-    @PositiveOrZero(message = "ID must be a positive number or zero")
-    private Long id;
-
     @NotBlank(message = "Name cannot be blank")
     private String name;
 
     @NotNull(message = "Quantity cannot be null")
     @PositiveOrZero(message = "Quantity must be a positive number or zero")
     private Long quantity;
+
+    @NotNull(message = "Quantity cannot be null")
+    private Long price;
 }

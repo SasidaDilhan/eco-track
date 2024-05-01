@@ -23,7 +23,7 @@ public class StoreItemController {
 
     private  StoreItemService storeItemService;
 
-//    @RolesAllowed("USER")
+    @RolesAllowed("ADMIN")
     @PostMapping(value = "/users/store_items",headers = "VERSION=V1")
     public ResponseEntity<String> addStoreItem(@RequestBody StoreItemRequestDTO storeItemRequestDTO, Authentication authentication) throws StoreItemNotFoundException, UserNotFonudException {
 
