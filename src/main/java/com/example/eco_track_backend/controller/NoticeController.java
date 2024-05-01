@@ -25,7 +25,7 @@ public class NoticeController {
 
 
     @RolesAllowed("ADMIN")
-    @PostMapping("/admins/notices")
+    @PostMapping(value = "/admins/notices",headers = "VERSION=V1")
     public void createNotice(@RequestBody NoticeRequestDto noticeRequestDto,Authentication authentication)throws UserNotFonudException{
 
         User user = (User) authentication.getPrincipal();
