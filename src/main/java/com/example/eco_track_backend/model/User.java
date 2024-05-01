@@ -35,6 +35,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Notice> noticeList;
 
+    @OneToMany(mappedBy = "user")
+    private List<StoreItem> storeItemList;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> roles = new ArrayList<>();

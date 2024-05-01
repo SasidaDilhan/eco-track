@@ -5,13 +5,15 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "routes")
-public class Routes {
+@Table(name ="stores")
+public class StoreItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private Long quantity;
 
-    private double latitude;
-    private double longitude;
+    @ManyToOne
+    private User user;
 }

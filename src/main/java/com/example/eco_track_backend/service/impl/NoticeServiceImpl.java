@@ -24,15 +24,16 @@ public class NoticeServiceImpl implements NoticeService {
     private ModelMapper modelMapper;
 
 
+    @Override
+    public void createNotice(NoticeRequestDto noticeRequestDto, String email) throws UserNotFonudException {
 
-  public void createNotice(NoticeRequestDto noticeRequestDto, String email)throws UserNotFonudException{
+        User user = userRepository.findUserByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("that email not found")
+        );
+        Notice notice = modelMapper.map(noticeRequestDto, Notice.class);
+        notice.setUser(user);
+        noticeRepository.save(notice);
+    }
 
-      User user = userRepository.findUserByEmail(email).orElseThrow(
-              ()-> new UsernameNotFoundException("that email not found")
-      );
-      Notice notice = modelMapper.map(noticeRequestDto,Notice.class);
 
-      notice.setUser(user);
-      noticeRepository.save(notice);
-  }
 }

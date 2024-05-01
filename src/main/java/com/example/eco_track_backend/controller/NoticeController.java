@@ -4,6 +4,7 @@ import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.Notice;
 import com.example.eco_track_backend.request.NoticeRequestDto;
 import com.example.eco_track_backend.service.NoticeService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,8 @@ public class NoticeController {
     private final NoticeService noticeService;
 
 
-    @PostMapping("/admins/notices")
+    @RolesAllowed("ADMIN")
+    @PostMapping(value = "/admins/notices",headers = "VERSION=V1")
     public void createNotice(@RequestBody NoticeRequestDto noticeRequestDto,Authentication authentication)throws UserNotFonudException{
 
         User user = (User) authentication.getPrincipal();

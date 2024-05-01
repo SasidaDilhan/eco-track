@@ -21,16 +21,27 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<UserResponseDTO> getAllUsers()throws UserNotFonudException {
+    public List<UserResponseDTO> getAllUsers() throws UserNotFonudException {
 
         List<User> userList = userRepository.findAll();
 
-        if (userList.isEmpty()){
+        if (userList.isEmpty()) {
             throw new UserNotFonudException("User List Empty!");
         }
 
         return userList.stream()
                 .map(users -> modelMapper.map(users, UserResponseDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserResponseDTO> getUserByEmail(String email) {
+
+        List<User> userList = userRepository.findUsersByEmail(email);
+
+        return userList.stream()
+                .map(user -> modelMapper.map(user, UserResponseDTO.class))
+                .collect(Collectors.toList());
+
     }
 }

@@ -1,4 +1,5 @@
-package com.example.eco_track_backend.exceptions;
+package com.example.eco_track_backend.exceptions.AppHandler;
+import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.response.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

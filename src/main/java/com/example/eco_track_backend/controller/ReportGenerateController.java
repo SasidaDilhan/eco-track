@@ -15,7 +15,7 @@ public class ReportGenerateController {
 
     private final ReportService reportService;
 
-    @GetMapping("/report/{format}")
+    @GetMapping(value = "/report/{format}", headers = "VERSION=V1")
     public String reportGenarate(@PathVariable String format) throws JRException, FileNotFoundException {
         return reportService.exportReport(format);
     }
