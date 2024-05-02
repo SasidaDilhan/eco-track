@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,4 +106,103 @@ public class StoreItemServiceImpl implements StoreItemService {
 
         return storeItemResponseDTOList;
     }
+
+    @Override
+    public StoreItemResponseDTO getSpecificUserSpecificItems(Long userId, Long storeItemId) throws UserNotFonudException, StoreItemNotFoundException {
+
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new UsernameNotFoundException("that user not in a data base")
+        );
+
+        List<StoreItem> storeItemList = user.getStoreItemList();
+
+        StoreItem getToItem = storeItemList.stream().filter(storeItem -> storeItem.getId().equals(storeItemId)).findFirst().orElse(null);
+
+        StoreItemResponseDTO storeItemResponseDTO = new StoreItemResponseDTO();
+
+        if(getToItem == null){
+            throw new StoreItemNotFoundException("store items not found");
+        };
+        storeItemResponseDTO.setId(getToItem.getId());
+        storeItemResponseDTO.setDescription(getToItem.getDescription());
+        storeItemResponseDTO.setQuantity(getToItem.getQuantity());
+        storeItemResponseDTO.setName(getToItem.getName());
+        storeItemResponseDTO.setImagePath(getToItem.getImagePath());
+        storeItemResponseDTO.setUser(getToItem.getUser().getId());
+        storeItemResponseDTO.setPrice(getToItem.getPrice());
+
+        return storeItemResponseDTO;
+    }
+
+    @Override
+    public StoreItemResponseDTO deleteSpecificUserSpecificItems(Long userId, Long storeItemId) throws UserNotFonudException, StoreItemNotFoundException {
+
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new UsernameNotFoundException("that user not in a data base")
+        );
+
+        List<StoreItem> storeItemList = user.getStoreItemList();
+
+        StoreItem deleteToItem = storeItemList.stream().filter(storeItem -> storeItem.getId().equals(storeItemId)).findFirst().orElse(null);
+
+        if(deleteToItem == null){
+            throw new StoreItemNotFoundException("store items not found");
+        };
+        storeItemRepository.delete(deleteToItem);
+
+        StoreItemResponseDTO storeItemResponseDTO = new StoreItemResponseDTO();
+
+        storeItemResponseDTO.setId(deleteToItem.getId());
+        storeItemResponseDTO.setDescription(deleteToItem.getDescription());
+        storeItemResponseDTO.setQuantity(deleteToItem.getQuantity());
+        storeItemResponseDTO.setName(deleteToItem.getName());
+        storeItemResponseDTO.setImagePath(deleteToItem.getImagePath());
+        storeItemResponseDTO.setUser(deleteToItem.getUser().getId());
+
+        return storeItemResponseDTO;
+
+    }
+
+    @Override
+    public StoreItemResponseDTO updateSpecificUserSpecificItems(Long userId, Long storeItemId,StoreItemRequestDTO storeItemRequestDTO) throws UserNotFonudException, StoreItemNotFoundException {
+
+
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new UsernameNotFoundException("that user not in a data base")
+        );
+
+        List<StoreItem> storeItemList = user.getStoreItemList();
+
+        StoreItem updateToItem = storeItemList.stream().filter(storeItem -> storeItem.getId().equals(storeItemId)).findFirst().orElse(null);
+
+        if(updateToItem == null){
+            throw new StoreItemNotFoundException("store items not found");
+        };
+
+        updateToItem.setDescription(storeItemRequestDTO.getDescription());
+        updateToItem.setImagePath(storeItemRequestDTO.getImagePath());
+        updateToItem.setName(storeItemRequestDTO.getName());
+        updateToItem.setQuantity(storeItemRequestDTO.getQuantity());
+        updateToItem.setPrice(storeItemRequestDTO.getPrice());
+
+        storeItemRepository.save(updateToItem);
+
+
+
+        StoreItemResponseDTO storeItemResponseDTO = new StoreItemResponseDTO();
+
+        storeItemResponseDTO.setId(updateToItem.getId());
+        storeItemResponseDTO.setDescription(updateToItem.getDescription());
+        storeItemResponseDTO.setQuantity(updateToItem.getQuantity());
+        storeItemResponseDTO.setName(updateToItem.getName());
+        storeItemResponseDTO.setImagePath(updateToItem.getImagePath());
+        storeItemResponseDTO.setUser(updateToItem.getUser().getId());
+        storeItemResponseDTO.setPrice(updateToItem.getPrice());
+
+        return storeItemResponseDTO;
+
+
+    }
+
+
 }

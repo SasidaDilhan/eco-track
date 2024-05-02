@@ -14,6 +14,11 @@ public class StoreItem {
     private String name;
     private Long quantity;
 
+    private String description;
+
+    private String imagePath;
+    private Double price;
+
     @ManyToOne
     private User user;
 }

@@ -15,4 +15,10 @@ public interface StoreItemService {
     List<StoreItemResponseDTO> getAllItems()throws StoreItemNotFoundException;
 
     List<StoreItemResponseDTO> getSpecificUserItems(Long userId)throws UserNotFonudException,StoreItemNotFoundException;
+
+    StoreItemResponseDTO getSpecificUserSpecificItems(Long userId, Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException;
+
+    StoreItemResponseDTO deleteSpecificUserSpecificItems(Long userId, Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException;
+
+    StoreItemResponseDTO updateSpecificUserSpecificItems(Long userId, Long storeItemId,StoreItemRequestDTO storeItemRequestDTO)throws UserNotFonudException,StoreItemNotFoundException;
 }
