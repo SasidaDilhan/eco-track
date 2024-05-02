@@ -22,7 +22,7 @@ public class TruckDriverRequestDTO {
     private String phone;
 
     @NotBlank(message = "NIC cannot be blank")
-    @Pattern(regexp = "[0-9]{9}[vVxX]", message = "Invalid NIC format")
+//    @Pattern(regexp = "[0-9]{9}[vVxX]", message = "Invalid NIC format")
     private String nic;
 
     @NotNull(message = "Age cannot be null")

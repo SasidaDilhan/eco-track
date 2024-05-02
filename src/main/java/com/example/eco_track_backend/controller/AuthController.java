@@ -84,6 +84,10 @@ public class AuthController {
             user.setUsername(requestDTO.getUsername());
             user.setPassword(hashedPassword);
 
+            User loggedInUserDetails = userRepository.findUserByEmail(requestDTO.getUsername())
+                    .orElseThrow(() -> new EntityNotFoundException("user not found"));
+
+
 
             // Check if the provided password matches the stored hashed password
             if (!passwordEncoder.matches(requestDTO.getPassword(), userOne.getPassword())) {
@@ -100,6 +104,7 @@ public class AuthController {
             String token = jwtService.generateToken(user, extraClaims);
             return UserLoginResponseDTO.builder()
                     .token(token)
+                    .user(loggedInUserDetails)
                     .build();
 
         }
