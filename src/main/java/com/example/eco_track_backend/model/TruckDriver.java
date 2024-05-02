@@ -23,11 +23,7 @@ public class TruckDriver {
     private Integer age;
     private String role;
 
-    private String addressLine1;
-    private String addressLine2;
-    private String city;
-    private String state;
-    private Long zip;
+
 
     @OneToMany(mappedBy = "truckDriver")
     private List<Route> routeList = new ArrayList<>();
