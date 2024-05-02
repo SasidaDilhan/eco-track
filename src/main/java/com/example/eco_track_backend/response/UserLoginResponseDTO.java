@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.response;
 
+import com.example.eco_track_backend.model.User;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,4 +9,5 @@ import lombok.Data;
 public class UserLoginResponseDTO {
 
     private String token;
+    private User user;
 }
