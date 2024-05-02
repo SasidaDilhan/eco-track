@@ -38,7 +38,7 @@ public class StoreItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body("item stored");
 
     }
-    @RolesAllowed("ADMIN")
+//    @RolesAllowed("ADMIN")
     @GetMapping(value = "/users/store_items",headers = "VERSION=V1")
     public List<StoreItemResponseDTO> getAllItem()throws StoreItemNotFoundException{
 
