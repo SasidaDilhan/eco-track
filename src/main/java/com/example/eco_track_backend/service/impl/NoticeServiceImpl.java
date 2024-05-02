@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -36,11 +38,19 @@ public class NoticeServiceImpl implements NoticeService {
 
         Notice notice = modelMapper.map(noticeRequestDto, Notice.class);
         notice.setDate(LocalDate.now());
+
+        LocalTime time = LocalTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        String formattedTime = time.format(formatter);
+
+        notice.setTime(LocalTime.parse(formattedTime));
         notice.setUser(user);
 
         noticeRepository.save(notice);
 
-        return NoticeResponseDTO.builder().id(notice.getId()).date(notice.getDate()).description(notice.getDescription()).imagePath(notice.getImagePath()).build();
+        return NoticeResponseDTO.builder().id(notice.getId()).date(notice.getDate()).description(notice.getDescription()).imagePath(notice.getImagePath()).time(notice.getTime()).build();
     }
 
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -16,6 +17,7 @@ public class Notice {
     private Long id;
     private String description;
     private LocalDate date;
+    private LocalTime time;
     private String imagePath;
 
     @ManyToOne
