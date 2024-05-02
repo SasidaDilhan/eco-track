@@ -82,5 +82,17 @@ public class NoticeServiceImpl implements NoticeService {
 
     }
 
+    @Override
+    public NoticeResponseDTO deleteSpecificNotice(Long noticeId) throws NoticeNotFoundException {
+
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
+                ()-> new NoticeNotFoundException("that notice not in a database")
+        );
+
+        noticeRepository.deleteById(notice.getId());
+
+        return NoticeResponseDTO.builder().time(notice.getTime()).date(notice.getDate()).imagePath(notice.getImagePath()).id(notice.getId()).description(notice.getDescription()).build();
+    }
+
 
 }
