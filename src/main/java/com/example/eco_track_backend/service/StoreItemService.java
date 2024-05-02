@@ -19,4 +19,6 @@ public interface StoreItemService {
     StoreItemResponseDTO getSpecificUserSpecificItems(Long userId, Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException;
 
     StoreItemResponseDTO deleteSpecificUserSpecificItems(Long userId, Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException;
+
+    StoreItemResponseDTO updateSpecificUserSpecificItems(Long userId, Long storeItemId,StoreItemRequestDTO storeItemRequestDTO)throws UserNotFonudException,StoreItemNotFoundException;
 }

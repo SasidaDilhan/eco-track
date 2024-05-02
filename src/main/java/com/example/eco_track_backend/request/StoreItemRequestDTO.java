@@ -18,7 +18,7 @@ public class StoreItemRequestDTO {
     private Long quantity;
 
     @NotNull(message = "Quantity cannot be null")
-    private Long price;
+    private Double price;
 
     private String description;
 

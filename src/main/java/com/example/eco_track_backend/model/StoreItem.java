@@ -17,6 +17,7 @@ public class StoreItem {
     private String description;
 
     private String imagePath;
+    private Double price;
 
     @ManyToOne
     private User user;

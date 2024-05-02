@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +62,12 @@ public class StoreItemController {
     public StoreItemResponseDTO deleteSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException{
 
         return storeItemService.deleteSpecificUserSpecificItems(userId,storeItemId);
+    }
+
+    @PutMapping("/users/{user_id}/store_items/{store_item_id}")
+    public StoreItemResponseDTO updateSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId,@RequestBody StoreItemRequestDTO storeItemRequestDTO)throws UserNotFonudException,StoreItemNotFoundException{
+
+        return storeItemService.updateSpecificUserSpecificItems(userId,storeItemId,storeItemRequestDTO);
     }
 
 

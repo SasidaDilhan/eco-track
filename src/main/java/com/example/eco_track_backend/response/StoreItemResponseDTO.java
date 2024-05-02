@@ -16,4 +16,6 @@ public class StoreItemResponseDTO {
 
     private Long user;
 
+    private Double price;
+
 }

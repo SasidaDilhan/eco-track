@@ -129,6 +129,7 @@ public class StoreItemServiceImpl implements StoreItemService {
         storeItemResponseDTO.setName(getToItem.getName());
         storeItemResponseDTO.setImagePath(getToItem.getImagePath());
         storeItemResponseDTO.setUser(getToItem.getUser().getId());
+        storeItemResponseDTO.setPrice(getToItem.getPrice());
 
         return storeItemResponseDTO;
     }
@@ -159,6 +160,47 @@ public class StoreItemServiceImpl implements StoreItemService {
         storeItemResponseDTO.setUser(deleteToItem.getUser().getId());
 
         return storeItemResponseDTO;
+
+    }
+
+    @Override
+    public StoreItemResponseDTO updateSpecificUserSpecificItems(Long userId, Long storeItemId,StoreItemRequestDTO storeItemRequestDTO) throws UserNotFonudException, StoreItemNotFoundException {
+
+
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new UsernameNotFoundException("that user not in a data base")
+        );
+
+        List<StoreItem> storeItemList = user.getStoreItemList();
+
+        StoreItem updateToItem = storeItemList.stream().filter(storeItem -> storeItem.getId().equals(storeItemId)).findFirst().orElse(null);
+
+        if(updateToItem == null){
+            throw new StoreItemNotFoundException("store items not found");
+        };
+
+        updateToItem.setDescription(storeItemRequestDTO.getDescription());
+        updateToItem.setImagePath(storeItemRequestDTO.getImagePath());
+        updateToItem.setName(storeItemRequestDTO.getName());
+        updateToItem.setQuantity(storeItemRequestDTO.getQuantity());
+        updateToItem.setPrice(storeItemRequestDTO.getPrice());
+
+        storeItemRepository.save(updateToItem);
+
+
+
+        StoreItemResponseDTO storeItemResponseDTO = new StoreItemResponseDTO();
+
+        storeItemResponseDTO.setId(updateToItem.getId());
+        storeItemResponseDTO.setDescription(updateToItem.getDescription());
+        storeItemResponseDTO.setQuantity(updateToItem.getQuantity());
+        storeItemResponseDTO.setName(updateToItem.getName());
+        storeItemResponseDTO.setImagePath(updateToItem.getImagePath());
+        storeItemResponseDTO.setUser(updateToItem.getUser().getId());
+        storeItemResponseDTO.setPrice(updateToItem.getPrice());
+
+        return storeItemResponseDTO;
+
 
     }
 
