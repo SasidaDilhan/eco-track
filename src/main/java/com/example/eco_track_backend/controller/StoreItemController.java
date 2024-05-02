@@ -2,13 +2,10 @@ package com.example.eco_track_backend.controller;
 
 import com.example.eco_track_backend.exceptions.StoreItemNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
-import com.example.eco_track_backend.model.StoreItem;
 import com.example.eco_track_backend.request.StoreItemRequestDTO;
 import com.example.eco_track_backend.response.StoreItemResponseDTO;
 import com.example.eco_track_backend.service.StoreItemService;
-import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.Store;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -55,9 +52,15 @@ public class StoreItemController {
     }
 
     @GetMapping("/users/{user_id}/store_items/{store_item_id}")
-    public StoreItemResponseDTO deleteSpecificUserItem(@PathVariable("user_id")Long userId,@PathVariable("store_item_id")Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException{
+    public StoreItemResponseDTO getSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException{
 
         return storeItemService.getSpecificUserSpecificItems(userId,storeItemId);
+    }
+
+    @DeleteMapping("/users/{user_id}/store_items/{store_item_id}")
+    public StoreItemResponseDTO deleteSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException{
+
+        return storeItemService.deleteSpecificUserSpecificItems(userId,storeItemId);
     }
 
 

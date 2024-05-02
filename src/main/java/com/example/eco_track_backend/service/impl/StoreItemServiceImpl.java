@@ -120,7 +120,9 @@ public class StoreItemServiceImpl implements StoreItemService {
 
         StoreItemResponseDTO storeItemResponseDTO = new StoreItemResponseDTO();
 
-        assert getToItem != null;
+        if(getToItem == null){
+            throw new StoreItemNotFoundException("store items not found");
+        };
         storeItemResponseDTO.setId(getToItem.getId());
         storeItemResponseDTO.setDescription(getToItem.getDescription());
         storeItemResponseDTO.setQuantity(getToItem.getQuantity());
@@ -131,6 +133,34 @@ public class StoreItemServiceImpl implements StoreItemService {
         return storeItemResponseDTO;
     }
 
+    @Override
+    public StoreItemResponseDTO deleteSpecificUserSpecificItems(Long userId, Long storeItemId) throws UserNotFonudException, StoreItemNotFoundException {
+
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new UsernameNotFoundException("that user not in a data base")
+        );
+
+        List<StoreItem> storeItemList = user.getStoreItemList();
+
+        StoreItem deleteToItem = storeItemList.stream().filter(storeItem -> storeItem.getId().equals(storeItemId)).findFirst().orElse(null);
+
+        if(deleteToItem == null){
+            throw new StoreItemNotFoundException("store items not found");
+        };
+        storeItemRepository.delete(deleteToItem);
+
+        StoreItemResponseDTO storeItemResponseDTO = new StoreItemResponseDTO();
+
+        storeItemResponseDTO.setId(deleteToItem.getId());
+        storeItemResponseDTO.setDescription(deleteToItem.getDescription());
+        storeItemResponseDTO.setQuantity(deleteToItem.getQuantity());
+        storeItemResponseDTO.setName(deleteToItem.getName());
+        storeItemResponseDTO.setImagePath(deleteToItem.getImagePath());
+        storeItemResponseDTO.setUser(deleteToItem.getUser().getId());
+
+        return storeItemResponseDTO;
+
+    }
 
 
 }
