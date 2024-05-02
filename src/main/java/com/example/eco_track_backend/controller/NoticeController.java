@@ -52,11 +52,20 @@ public class NoticeController {
 
     }
 
+
+    @GetMapping("/notices/{notice_id}")
+    public NoticeResponseDTO getSpecificNotice(@PathVariable("notice_id")Long noticeId)throws NoticeNotFoundException{
+
+        return noticeService.getSpecificNotice(noticeId);
+    }
+
     @DeleteMapping("/notices/{notice_id}")
     public NoticeResponseDTO deleteSpecificNotice(@PathVariable("notice_id")Long noticeId)throws NoticeNotFoundException{
 
         return noticeService.deleteSpecificNotice(noticeId);
     }
+
+
 
 
 

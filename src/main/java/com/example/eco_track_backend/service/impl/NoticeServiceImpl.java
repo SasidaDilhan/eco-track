@@ -94,5 +94,17 @@ public class NoticeServiceImpl implements NoticeService {
         return NoticeResponseDTO.builder().time(notice.getTime()).date(notice.getDate()).imagePath(notice.getImagePath()).id(notice.getId()).description(notice.getDescription()).build();
     }
 
+    @Override
+    public NoticeResponseDTO getSpecificNotice(Long noticeId) throws NoticeNotFoundException {
+
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
+                ()-> new NoticeNotFoundException("that notice not in a database")
+        );
+
+        return NoticeResponseDTO.builder().time(notice.getTime()).date(notice.getDate()).imagePath(notice.getImagePath()).id(notice.getId()).description(notice.getDescription()).build();
+
+
+    }
+
 
 }
