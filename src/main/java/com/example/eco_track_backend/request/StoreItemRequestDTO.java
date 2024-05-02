@@ -19,4 +19,9 @@ public class StoreItemRequestDTO {
 
     @NotNull(message = "Quantity cannot be null")
     private Long price;
+
+    private String description;
+
+    private String imagePath;
+
 }

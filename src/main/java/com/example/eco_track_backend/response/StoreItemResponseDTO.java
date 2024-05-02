@@ -10,6 +10,10 @@ public class StoreItemResponseDTO {
     private String name;
     private Long quantity;
 
+    private String description;
+
+    private String imagePath;
+
     private Long user;
 
 }
