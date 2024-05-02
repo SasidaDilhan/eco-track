@@ -6,6 +6,7 @@ import com.example.eco_track_backend.model.User;
 import com.example.eco_track_backend.repository.NoticeRepository;
 import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.request.NoticeRequestDto;
+import com.example.eco_track_backend.response.NoticeResponseDTO;
 import com.example.eco_track_backend.service.NoticeService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -25,14 +27,20 @@ public class NoticeServiceImpl implements NoticeService {
 
 
     @Override
-    public void createNotice(NoticeRequestDto noticeRequestDto, String email) throws UserNotFonudException {
+    public NoticeResponseDTO createNotice(NoticeRequestDto noticeRequestDto, String email) throws UserNotFonudException {
 
         User user = userRepository.findUserByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("that email not found")
         );
+
+
         Notice notice = modelMapper.map(noticeRequestDto, Notice.class);
+        notice.setDate(LocalDate.now());
         notice.setUser(user);
+
         noticeRepository.save(notice);
+
+        return NoticeResponseDTO.builder().id(notice.getId()).date(notice.getDate()).description(notice.getDescription()).imagePath(notice.getImagePath()).build();
     }
 
 
