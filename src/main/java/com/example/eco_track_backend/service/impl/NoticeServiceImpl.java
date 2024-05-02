@@ -8,15 +8,19 @@ import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.request.NoticeRequestDto;
 import com.example.eco_track_backend.response.NoticeResponseDTO;
 import com.example.eco_track_backend.service.NoticeService;
+import jakarta.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,6 +55,14 @@ public class NoticeServiceImpl implements NoticeService {
         noticeRepository.save(notice);
 
         return NoticeResponseDTO.builder().id(notice.getId()).date(notice.getDate()).description(notice.getDescription()).imagePath(notice.getImagePath()).time(notice.getTime()).build();
+    }
+
+    @Override
+    public List<NoticeResponseDTO> getAllNotice() {
+
+        List<Notice> noticeList = noticeRepository.findAll();
+
+       return noticeList.stream().map(notice -> NoticeResponseDTO.builder().time(notice.getTime()).date(notice.getDate()).imagePath(notice.getImagePath()).id(notice.getId()).description(notice.getDescription()).build()).toList();
     }
 
 

@@ -13,10 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -34,6 +33,14 @@ public class NoticeController {
         String email = user.getUsername();
 
        return noticeService.createNotice(noticeRequestDto,email);
+    }
+
+
+
+    @GetMapping("/notices")
+    public List<NoticeResponseDTO> getAllNotice(){
+
+        return noticeService.getAllNotice();
     }
 
 
