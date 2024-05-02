@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.controller;
 
+import com.example.eco_track_backend.exceptions.NoticeNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.Notice;
 import com.example.eco_track_backend.request.NoticeRequestDto;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +43,13 @@ public class NoticeController {
     public List<NoticeResponseDTO> getAllNotice(){
 
         return noticeService.getAllNotice();
+    }
+
+    @PutMapping("/notices/{notice_id}")
+    public NoticeResponseDTO updateSpecificNotice(@PathVariable("notice_id")Long noticeId,@RequestBody NoticeRequestDto noticeRequestDto)throws NoticeNotFoundException {
+
+        return noticeService.updateSpecificNotice(noticeId,noticeRequestDto);
+
     }
 
 

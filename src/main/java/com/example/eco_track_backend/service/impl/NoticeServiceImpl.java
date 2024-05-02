@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.service.impl;
 
+import com.example.eco_track_backend.exceptions.NoticeNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.Notice;
 import com.example.eco_track_backend.model.User;
@@ -63,6 +64,22 @@ public class NoticeServiceImpl implements NoticeService {
         List<Notice> noticeList = noticeRepository.findAll();
 
        return noticeList.stream().map(notice -> NoticeResponseDTO.builder().time(notice.getTime()).date(notice.getDate()).imagePath(notice.getImagePath()).id(notice.getId()).description(notice.getDescription()).build()).toList();
+    }
+
+    @Override
+    public NoticeResponseDTO updateSpecificNotice(Long noticeId, NoticeRequestDto noticeRequestDto) throws NoticeNotFoundException {
+
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
+                ()-> new NoticeNotFoundException("that notice not found")
+        );
+
+       notice.setDescription(noticeRequestDto.getDescription());
+       notice.setImagePath(noticeRequestDto.getImagePath());
+
+       noticeRepository.save(notice);
+
+       return NoticeResponseDTO.builder().time(notice.getTime()).date(notice.getDate()).imagePath(notice.getImagePath()).id(notice.getId()).description(notice.getDescription()).build();
+
     }
 
 

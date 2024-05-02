@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.service;
 
+import com.example.eco_track_backend.exceptions.NoticeNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.Notice;
 import com.example.eco_track_backend.request.NoticeRequestDto;
@@ -15,4 +16,6 @@ public interface NoticeService {
 
 
     List<NoticeResponseDTO> getAllNotice();
+
+    NoticeResponseDTO updateSpecificNotice(Long noticeId, NoticeRequestDto noticeRequestDto)throws NoticeNotFoundException;
 }
