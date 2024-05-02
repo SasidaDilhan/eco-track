@@ -23,6 +23,9 @@ private final PasswordEncoder passwordEncoder;
     public ResponseEntity<User> saveUser(UserRegisterRequestDTO userRegisterRequestDTO) {
         User user = modelMapper.map(userRegisterRequestDTO, User.class);
         user.setPassword(passwordEncoder.encode(userRegisterRequestDTO.getPassword()));
+
+        user.setRole("USER");
+
         userRepository.save(user);
         return new  ResponseEntity<>(user, HttpStatus.CREATED);
     }

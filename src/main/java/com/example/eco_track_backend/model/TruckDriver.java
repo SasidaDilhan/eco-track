@@ -23,6 +23,8 @@ public class TruckDriver {
     private Integer age;
     private String role;
 
+
+
     @OneToMany(mappedBy = "truckDriver")
     private List<Route> routeList = new ArrayList<>();
 

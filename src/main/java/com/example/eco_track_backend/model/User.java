@@ -29,6 +29,13 @@ public class User implements UserDetails {
     private String phone;
     private String role;
 
+
+    private String addressLine1;
+    private String addressLine2;
+    private String city;
+    private String state;
+    private Long zip;
+
     @ManyToOne
     private Route route;
 

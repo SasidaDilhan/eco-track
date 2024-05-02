@@ -2,16 +2,14 @@ package com.example.eco_track_backend.controller;
 
 import com.example.eco_track_backend.exceptions.StoreItemNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
-import com.example.eco_track_backend.model.StoreItem;
 import com.example.eco_track_backend.request.StoreItemRequestDTO;
 import com.example.eco_track_backend.response.StoreItemResponseDTO;
 import com.example.eco_track_backend.service.StoreItemService;
-import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.Store;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +21,7 @@ public class StoreItemController {
 
     private  StoreItemService storeItemService;
 
-    @RolesAllowed("ADMIN")
+//    @RolesAllowed("ADMIN")
     @PostMapping(value = "/users/store_items",headers = "VERSION=V1")
     public ResponseEntity<String> addStoreItem(@RequestBody StoreItemRequestDTO storeItemRequestDTO, Authentication authentication) throws StoreItemNotFoundException, UserNotFonudException {
 
@@ -38,7 +36,7 @@ public class StoreItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body("item stored");
 
     }
-    @RolesAllowed("ADMIN")
+//    @RolesAllowed("ADMIN")
     @GetMapping(value = "/users/store_items",headers = "VERSION=V1")
     public List<StoreItemResponseDTO> getAllItem()throws StoreItemNotFoundException{
 
@@ -52,6 +50,24 @@ public class StoreItemController {
 
       return storeItemService.getSpecificUserItems(userId);
 
+    }
+
+    @GetMapping("/users/{user_id}/store_items/{store_item_id}")
+    public StoreItemResponseDTO getSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException{
+
+        return storeItemService.getSpecificUserSpecificItems(userId,storeItemId);
+    }
+
+    @DeleteMapping("/users/{user_id}/store_items/{store_item_id}")
+    public StoreItemResponseDTO deleteSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException{
+
+        return storeItemService.deleteSpecificUserSpecificItems(userId,storeItemId);
+    }
+
+    @PutMapping("/users/{user_id}/store_items/{store_item_id}")
+    public StoreItemResponseDTO updateSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId,@RequestBody StoreItemRequestDTO storeItemRequestDTO)throws UserNotFonudException,StoreItemNotFoundException{
+
+        return storeItemService.updateSpecificUserSpecificItems(userId,storeItemId,storeItemRequestDTO);
     }
 
 
