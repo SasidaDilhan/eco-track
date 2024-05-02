@@ -15,4 +15,6 @@ public interface StoreItemService {
     List<StoreItemResponseDTO> getAllItems()throws StoreItemNotFoundException;
 
     List<StoreItemResponseDTO> getSpecificUserItems(Long userId)throws UserNotFonudException,StoreItemNotFoundException;
+
+    StoreItemResponseDTO getSpecificUserSpecificItems(Long userId, Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException;
 }

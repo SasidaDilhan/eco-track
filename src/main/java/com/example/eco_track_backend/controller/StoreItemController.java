@@ -54,5 +54,11 @@ public class StoreItemController {
 
     }
 
+    @GetMapping("/users/{user_id}/store_items/{store_item_id}")
+    public StoreItemResponseDTO deleteSpecificUserItem(@PathVariable("user_id")Long userId,@PathVariable("store_item_id")Long storeItemId)throws UserNotFonudException,StoreItemNotFoundException{
+
+        return storeItemService.getSpecificUserSpecificItems(userId,storeItemId);
+    }
+
 
 }

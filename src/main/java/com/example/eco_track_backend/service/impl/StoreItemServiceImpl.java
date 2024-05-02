@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,4 +106,31 @@ public class StoreItemServiceImpl implements StoreItemService {
 
         return storeItemResponseDTOList;
     }
+
+    @Override
+    public StoreItemResponseDTO getSpecificUserSpecificItems(Long userId, Long storeItemId) throws UserNotFonudException, StoreItemNotFoundException {
+
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new UsernameNotFoundException("that user not in a data base")
+        );
+
+        List<StoreItem> storeItemList = user.getStoreItemList();
+
+        StoreItem getToItem = storeItemList.stream().filter(storeItem -> storeItem.getId().equals(storeItemId)).findFirst().orElse(null);
+
+        StoreItemResponseDTO storeItemResponseDTO = new StoreItemResponseDTO();
+
+        assert getToItem != null;
+        storeItemResponseDTO.setId(getToItem.getId());
+        storeItemResponseDTO.setDescription(getToItem.getDescription());
+        storeItemResponseDTO.setQuantity(getToItem.getQuantity());
+        storeItemResponseDTO.setName(getToItem.getName());
+        storeItemResponseDTO.setImagePath(getToItem.getImagePath());
+        storeItemResponseDTO.setUser(getToItem.getUser().getId());
+
+        return storeItemResponseDTO;
+    }
+
+
+
 }
