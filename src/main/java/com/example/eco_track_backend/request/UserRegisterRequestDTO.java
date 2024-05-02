@@ -33,9 +33,15 @@ public class UserRegisterRequestDTO {
     @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
     private String phone;
 
-    @NotNull(message = "Role cannot be null")
-    @Enumerated(EnumType.STRING)
-    private ROLES role;
+//    @NotNull(message = "Role cannot be null")
+//    @Enumerated(EnumType.STRING)
+//    private ROLES role;
 
     private String email;
+
+    private String addressLine1;
+    private String addressLine2;
+    private String city;
+    private String state;
+    private Long zip;
 }

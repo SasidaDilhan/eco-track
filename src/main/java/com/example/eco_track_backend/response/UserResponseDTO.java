@@ -15,6 +15,12 @@ public class UserResponseDTO {
     private String nic;
     private String phone;
 
+    private String addressLine1;
+    private String addressLine2;
+    private String city;
+    private String state;
+    private Long zip;
+
     @Enumerated(EnumType.STRING)
     private ROLES role;
 }
