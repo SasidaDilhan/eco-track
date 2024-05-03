@@ -82,7 +82,8 @@ public class StoreItemServiceImpl implements StoreItemService {
             storeItemResponseDTO.setQuantity(storeItem.getQuantity());
             storeItemResponseDTO.setUser(storeItem.getUser().getId());
             storeItemResponseDTO.setImagePath(storeItem.getImagePath());
-
+            storeItemResponseDTO.setPrice(storeItem.getPrice());
+            storeItemResponseDTO.setDescription(storeItem.getDescription());
             storeItemResponseDTOList.add(storeItemResponseDTO);
         }
 
