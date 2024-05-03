@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/route/**")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/truckdriver")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/report/**")).permitAll();
-                    auth.requestMatchers(antMatchers(HttpMethod.POST, "/admins/notices")).permitAll();
+//                    auth.requestMatchers(antMatchers(HttpMethod.POST, "/admins/notices")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/users/store_items")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/routes/{route_id}/disposalPlaces")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "routes")).permitAll();
@@ -43,8 +43,8 @@ public class SecurityConfiguration {
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/register")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/notices")).permitAll();
-                    auth.requestMatchers(antMatchers(HttpMethod.GET, "/notices/{notice_id}")).permitAll();
-                    auth.requestMatchers(antMatchers(HttpMethod.PUT, "/notices/{notice_id}")).permitAll();
+//                    auth.requestMatchers(antMatchers(HttpMethod.GET, "/notices/{notice_id}")).permitAll();
+//                    auth.requestMatchers(antMatchers(HttpMethod.PUT, "/notices/{notice_id}")).permitAll();
                     auth.requestMatchers("/error/**").permitAll();
                     auth.requestMatchers("/api/auth/**").permitAll();
                     auth.anyRequest().authenticated();

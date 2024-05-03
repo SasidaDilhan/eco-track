@@ -54,12 +54,14 @@ public class NoticeController {
     }
 
 
+    @RolesAllowed("ADMIN")
     @GetMapping("/notices/{notice_id}")
     public NoticeResponseDTO getSpecificNotice(@PathVariable("notice_id")Long noticeId)throws NoticeNotFoundException{
 
         return noticeService.getSpecificNotice(noticeId);
     }
 
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/notices/{notice_id}")
     public NoticeResponseDTO deleteSpecificNotice(@PathVariable("notice_id")Long noticeId)throws NoticeNotFoundException{
 
