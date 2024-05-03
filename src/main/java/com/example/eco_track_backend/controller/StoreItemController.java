@@ -67,9 +67,9 @@ public class StoreItemController {
     }
 
     @PutMapping("/users/{user_id}/store_items/{store_item_id}")
-    public StoreItemResponseDTO updateSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId,@RequestBody StoreItemRequestDTO storeItemRequestDTO)throws UserNotFonudException,StoreItemNotFoundException{
+    public StoreItemResponseDTO updateSpecificUserSpecificItems(@PathVariable("user_id")Long userId, @PathVariable("store_item_id")Long storeItemId,@ModelAttribute StoreItemRequestDTO storeItemRequestDTO,@RequestParam("imagePath")MultipartFile file)throws UserNotFonudException,StoreItemNotFoundException,IOException{
 
-        return storeItemService.updateSpecificUserSpecificItems(userId,storeItemId,storeItemRequestDTO);
+        return storeItemService.updateSpecificUserSpecificItems(userId,storeItemId,storeItemRequestDTO,file);
     }
 
 
