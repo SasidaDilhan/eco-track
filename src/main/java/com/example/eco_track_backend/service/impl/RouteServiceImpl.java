@@ -101,4 +101,11 @@ public class RouteServiceImpl implements RouteService {
 
     }
 
+    @Override
+    public RouteResponseDTO updateSpecificRoute(Long routeId) throws RouteNotFoundException {
+
+        Route route
+
+    }
+
 }
