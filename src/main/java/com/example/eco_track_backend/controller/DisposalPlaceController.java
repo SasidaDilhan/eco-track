@@ -8,10 +8,7 @@ import com.example.eco_track_backend.service.DisposalPlaceService;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -28,4 +25,10 @@ public class DisposalPlaceController {
         return disposalPlaceService.addDisposalPlace(disposalPlacesRequestDTO,routeId);
 
     }
+
+//    @GetMapping("/routes/{route_id}/disposalPlaces")
+//    public DisposalPlaceResponseDTO getAllDisposalPlace(@PathVariable("disposal_place")Long disposalPlaceId){
+//
+////        return disposalPlaceService.getAllDisposalPlace()
+//    }
 }
