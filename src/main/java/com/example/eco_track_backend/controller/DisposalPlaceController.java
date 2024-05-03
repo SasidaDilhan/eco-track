@@ -26,6 +26,13 @@ public class DisposalPlaceController {
 
     }
 
+
+//    @GetMapping("/routes/{route_id}/disposalPlaces")
+//    public DisposalPlaceResponseDTO getAllDisposalPlace(@RequestBody){
+//
+//
+//    }
+
 //    @GetMapping("/routes/{route_id}/disposalPlaces")
 //    public DisposalPlaceResponseDTO getAllDisposalPlace(@PathVariable("disposal_place")Long disposalPlaceId){
 //
