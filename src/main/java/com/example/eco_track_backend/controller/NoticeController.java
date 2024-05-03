@@ -45,6 +45,7 @@ public class NoticeController {
         return noticeService.getAllNotice();
     }
 
+    @RolesAllowed("ADMIN")
     @PutMapping("/notices/{notice_id}")
     public NoticeResponseDTO updateSpecificNotice(@PathVariable("notice_id")Long noticeId,@RequestBody NoticeRequestDto noticeRequestDto)throws NoticeNotFoundException {
 

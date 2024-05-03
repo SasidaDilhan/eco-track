@@ -42,6 +42,9 @@ public class SecurityConfiguration {
 
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/register")).permitAll();
+                    auth.requestMatchers(antMatchers(HttpMethod.GET, "/notices")).permitAll();
+                    auth.requestMatchers(antMatchers(HttpMethod.GET, "/notices/{notice_id}")).permitAll();
+                    auth.requestMatchers(antMatchers(HttpMethod.PUT, "/notices/{notice_id}")).permitAll();
                     auth.requestMatchers("/error/**").permitAll();
                     auth.requestMatchers("/api/auth/**").permitAll();
                     auth.anyRequest().authenticated();
