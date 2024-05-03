@@ -30,13 +30,13 @@ public class SecurityConfiguration {
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/user")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/users")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/admin")).permitAll();
-                    auth.requestMatchers(antMatchers(HttpMethod.POST, "/route/**")).permitAll();
+//                    auth.requestMatchers(antMatchers(HttpMethod.POST, "/route/**")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/truckdriver")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/report/**")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/admins/notices")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/users/store_items")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.POST, "/routes/{route_id}/disposalPlaces")).permitAll();
-                    auth.requestMatchers(antMatchers(HttpMethod.POST, "routes")).permitAll();
+//                    auth.requestMatchers(antMatchers(HttpMethod.POST, "routes")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "routes/users/store_items")).permitAll();
                     auth.requestMatchers(antMatchers(HttpMethod.GET, "/users/{user_id}/store_items")).permitAll();
 
