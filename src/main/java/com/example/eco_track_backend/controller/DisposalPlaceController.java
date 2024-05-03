@@ -6,9 +6,12 @@ import com.example.eco_track_backend.request.DisposalPlacesRequestDTO;
 import com.example.eco_track_backend.response.DisposalPlaceResponseDTO;
 import com.example.eco_track_backend.service.DisposalPlaceService;
 import jakarta.annotation.security.RolesAllowed;
+import jdk.dynalink.linker.LinkerServices;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -24,6 +27,12 @@ public class DisposalPlaceController {
         System.out.println("longitude :"+disposalPlacesRequestDTO.getLongitude());
         return disposalPlaceService.addDisposalPlace(disposalPlacesRequestDTO,routeId);
 
+    }
+
+    @GetMapping("/routes/disposalPlaces")
+    public List<DisposalPlaceResponseDTO> getAllDisposalPlace(){
+
+        return disposalPlaceService.getAllDisposalPlace();
     }
 
 

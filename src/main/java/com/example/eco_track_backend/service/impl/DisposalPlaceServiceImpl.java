@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class DisposalPlaceServiceImpl implements DisposalPlaceService {
@@ -52,5 +54,14 @@ public class DisposalPlaceServiceImpl implements DisposalPlaceService {
 
 
     }
+
+    @Override
+    public List<DisposalPlaceResponseDTO> getAllDisposalPlace() {
+
+        List<DisposalPlaces> disposalPlacesList =disposalPlaceRepository.findAll();
+
+        return disposalPlacesList.stream().map(disposalPlaces -> DisposalPlaceResponseDTO.builder().id(disposalPlaces.getId()).name(disposalPlaces.getName()).longitude(disposalPlaces.getLongitude()).latitude(disposalPlaces.getLatitude()).route(disposalPlaces.getRoute().getId()).build()).toList();
+    }
+
 
 }

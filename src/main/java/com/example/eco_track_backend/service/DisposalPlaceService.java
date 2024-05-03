@@ -7,7 +7,11 @@ import com.example.eco_track_backend.request.DisposalPlacesRequestDTO;
 import com.example.eco_track_backend.response.DisposalPlaceResponseDTO;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface DisposalPlaceService {
 
     DisposalPlaceResponseDTO addDisposalPlace(DisposalPlacesRequestDTO disposalPlacesRequestDTO, Long routeId)throws RouteNotFoundException;
+
+    List<DisposalPlaceResponseDTO> getAllDisposalPlace();
 }
