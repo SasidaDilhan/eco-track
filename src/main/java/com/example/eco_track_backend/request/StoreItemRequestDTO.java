@@ -11,14 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class StoreItemRequestDTO {
 
-    @NotBlank(message = "Name cannot be blank")
+
     private String name;
 
-    @NotNull(message = "Quantity cannot be null")
-    @PositiveOrZero(message = "Quantity must be a positive number or zero")
+
     private Long quantity;
 
-    @NotNull(message = "Quantity cannot be null")
+
     private Double price;
 
     private String description;
