@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.service.impl;
 
+import com.example.eco_track_backend.exceptions.DisposalPlaceNotFoundException;
 import com.example.eco_track_backend.exceptions.RouteNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.DisposalPlaces;
@@ -61,6 +62,13 @@ public class DisposalPlaceServiceImpl implements DisposalPlaceService {
         List<DisposalPlaces> disposalPlacesList =disposalPlaceRepository.findAll();
 
         return disposalPlacesList.stream().map(disposalPlaces -> DisposalPlaceResponseDTO.builder().id(disposalPlaces.getId()).name(disposalPlaces.getName()).longitude(disposalPlaces.getLongitude()).latitude(disposalPlaces.getLatitude()).route(disposalPlaces.getRoute().getId()).build()).toList();
+    }
+
+    @Override
+    public DisposalPlaceResponseDTO getSpecificRouteSpecificDisposalPlace(Long disposalPlaceId, Long routeId) throws DisposalPlaceNotFoundException, RouteNotFoundException {
+
+
+        return null;
     }
 
 

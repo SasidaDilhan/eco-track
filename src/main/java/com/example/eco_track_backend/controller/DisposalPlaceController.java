@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.controller;
 
+import com.example.eco_track_backend.exceptions.DisposalPlaceNotFoundException;
 import com.example.eco_track_backend.exceptions.RouteNotFoundException;
 import com.example.eco_track_backend.model.DisposalPlaces;
 import com.example.eco_track_backend.request.DisposalPlacesRequestDTO;
@@ -33,6 +34,14 @@ public class DisposalPlaceController {
     public List<DisposalPlaceResponseDTO> getAllDisposalPlace(){
 
         return disposalPlaceService.getAllDisposalPlace();
+    }
+
+
+    @GetMapping("/routes/{route_id}/disposalPlaces/{disposal_place_id}")
+    public DisposalPlaceResponseDTO getSpecificRouteSpecificDisposalPlace(@PathVariable("disposal_place_id")Long disposalPlaceId,@PathVariable("route_id")Long routeId)throws DisposalPlaceNotFoundException,RouteNotFoundException {
+
+    return disposalPlaceService.getSpecificRouteSpecificDisposalPlace(disposalPlaceId,routeId);
+
     }
 
 
