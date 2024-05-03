@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.service.impl;
 
+import com.example.eco_track_backend.exceptions.DisposalPlaceNotFoundException;
 import com.example.eco_track_backend.exceptions.RouteNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.DisposalPlaces;
@@ -17,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -52,5 +55,21 @@ public class DisposalPlaceServiceImpl implements DisposalPlaceService {
 
 
     }
+
+    @Override
+    public List<DisposalPlaceResponseDTO> getAllDisposalPlace() {
+
+        List<DisposalPlaces> disposalPlacesList =disposalPlaceRepository.findAll();
+
+        return disposalPlacesList.stream().map(disposalPlaces -> DisposalPlaceResponseDTO.builder().id(disposalPlaces.getId()).name(disposalPlaces.getName()).longitude(disposalPlaces.getLongitude()).latitude(disposalPlaces.getLatitude()).route(disposalPlaces.getRoute().getId()).build()).toList();
+    }
+
+    @Override
+    public DisposalPlaceResponseDTO getSpecificRouteSpecificDisposalPlace(Long disposalPlaceId, Long routeId) throws DisposalPlaceNotFoundException, RouteNotFoundException {
+
+
+        return null;
+    }
+
 
 }
