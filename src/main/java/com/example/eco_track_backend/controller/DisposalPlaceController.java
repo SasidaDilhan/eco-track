@@ -5,6 +5,7 @@ import com.example.eco_track_backend.model.DisposalPlaces;
 import com.example.eco_track_backend.request.DisposalPlacesRequestDTO;
 import com.example.eco_track_backend.response.DisposalPlaceResponseDTO;
 import com.example.eco_track_backend.service.DisposalPlaceService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ public class DisposalPlaceController {
 
     private final DisposalPlaceService disposalPlaceService;
 
+@RolesAllowed("ADMIN")
     @PostMapping(value = "/routes/{route_id}/disposalPlaces", headers = "VERSION=V1")
     public DisposalPlaceResponseDTO addDisposalPlace (@RequestBody DisposalPlacesRequestDTO disposalPlacesRequestDTO, @PathVariable("route_id")Long routeId)throws RouteNotFoundException {
 
