@@ -40,7 +40,7 @@ public class NoticeController {
         return noticeService.create(noticeRequestDto,file,email);
     }
 
-@RolesAllowed("ADMIN")
+//@RolesAllowed("ADMIN")
     @GetMapping("/notices2")
     public List<NoticeResponseDTO> getAllNotice(){
 
