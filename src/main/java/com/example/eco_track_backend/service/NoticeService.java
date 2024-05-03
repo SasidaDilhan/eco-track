@@ -30,4 +30,6 @@ public interface NoticeService {
     List<NoticeResponseDTO> getAllNotice();
 
     NoticeResponseDTO getSpecificNotice2(Long noticeId)throws NoticeNotFoundException;
+
+    NoticeRequestDto deleteSpecificNotice2(Long noticeId)throws NoticeNotFoundException;
 }

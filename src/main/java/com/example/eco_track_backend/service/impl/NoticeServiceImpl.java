@@ -43,11 +43,11 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public NoticeResponseDTO create(NoticeRequestDto noticeRequestDto, MultipartFile file, String email) throws IOException {
 
-                User user = userRepository.findUserByEmail(email).orElseThrow(
+        User user = userRepository.findUserByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("that email not found")
         );
 
-                Notice notice = modelMapper.map(noticeRequestDto, Notice.class);
+        Notice notice = modelMapper.map(noticeRequestDto, Notice.class);
         notice.setDate(LocalDate.now());
 
         LocalTime time = LocalTime.now();
@@ -82,12 +82,31 @@ public class NoticeServiceImpl implements NoticeService {
     public NoticeResponseDTO getSpecificNotice2(Long noticeId) throws NoticeNotFoundException {
 
         Notice notice = noticeRepository.findById(noticeId).orElseThrow(
-                ()-> new NoticeNotFoundException("that notice not in a database")
+                () -> new NoticeNotFoundException("that notice not in a database")
 
         );
 
         return NoticeResponseDTO.builder().id(notice.getId()).date(notice.getDate()).time(notice.getTime()).description(notice.getDescription()).imagePath(notice.getImagePath()).build();
     }
+
+    @Override
+    public NoticeRequestDto deleteSpecificNotice2(Long noticeId) throws NoticeNotFoundException {
+
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
+                () -> new NoticeNotFoundException("that notice not in a database")
+
+        );
+
+        noticeRepository.deleteById(notice.getId());
+
+        return null;
+    }
+
+
+
+
+
+
 
 
 //    @Override
