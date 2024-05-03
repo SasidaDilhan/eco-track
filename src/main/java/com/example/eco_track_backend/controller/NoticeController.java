@@ -62,6 +62,13 @@ public class NoticeController {
     }
 
 
+//@PutMapping("/notices2/{notice_id}")
+//
+//    public NoticeResponseDTO updateSpecificNotice2(@PathVariable("notice_id")Long noticeId,@ModelAttribute NoticeRequestDto noticeRequestDto, @RequestParam("imagePath")MultipartFile file)throws NoticeNotFoundException,IOException{
+//
+//        return noticeService.updateSpecificNotice2(noticeId,noticeRequestDto,file);
+//}
+
 
 //    @RolesAllowed("ADMIN")
 //    @PostMapping(value = "/admins/notices",headers = "VERSION=V1")
