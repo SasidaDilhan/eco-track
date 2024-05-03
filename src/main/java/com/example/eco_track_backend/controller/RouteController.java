@@ -61,4 +61,12 @@ public class RouteController {
         return routeService.deleteSpecificRoute(routeId);
     }
 
+
+    @PutMapping(value = "/routes/{route_id}",headers = "VERSION=V1")
+    public RouteResponseDTO updateSpecificRoute(@PathVariable("route_id")Long routeId,@RequestBody RouteRequestDTO routeRequestDTO)throws RouteNotFoundException{
+
+        return routeService.updateSpecificRoute(routeId,routeRequestDTO);
+
+    }
+
 }

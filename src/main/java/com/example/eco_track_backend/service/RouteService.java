@@ -21,4 +21,6 @@ public interface RouteService {
     RouteResponseDTO deleteSpecificRoute(Long routeId)throws RouteNotFoundException;
 
     RouteResponseDTO getSpecificRoute(Long routeId)throws RouteNotFoundException;
+
+    RouteResponseDTO updateSpecificRoute(Long routeId,RouteRequestDTO routeRequestDTO)throws RouteNotFoundException;
 }

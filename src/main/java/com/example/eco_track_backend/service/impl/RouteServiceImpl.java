@@ -101,4 +101,29 @@ public class RouteServiceImpl implements RouteService {
 
     }
 
+    @Override
+    public RouteResponseDTO updateSpecificRoute(Long routeId,RouteRequestDTO routeRequestDTO) throws RouteNotFoundException {
+
+        Route route = routeRepository.findById(routeId).orElseThrow(
+                ()-> new RouteNotFoundException("that route not in a database")
+        );
+
+        route.setName(routeRequestDTO.getName());
+        route.setLatitude(routeRequestDTO.getLatitude());
+        route.setLongitude(routeRequestDTO.getLongitude());
+
+        routeRepository.save(route);
+
+        RouteResponseDTO routeResponseDTO = new RouteResponseDTO();
+
+        routeResponseDTO.setId(route.getId());
+        routeResponseDTO.setName(route.getName());
+        routeResponseDTO.setLongitude(route.getLongitude());
+        routeResponseDTO.setLatitude(route.getLatitude());
+
+        return routeResponseDTO;
+
+
+    }
+
 }
