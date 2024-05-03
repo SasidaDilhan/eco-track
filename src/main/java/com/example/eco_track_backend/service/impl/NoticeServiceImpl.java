@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.service.impl;
 
+import com.cloudinary.Cloudinary;
 import com.example.eco_track_backend.exceptions.NoticeNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.Notice;
@@ -27,6 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -36,9 +38,9 @@ public class NoticeServiceImpl implements NoticeService {
     private final UserRepository userRepository;
     private final NoticeRepository noticeRepository;
     private ModelMapper modelMapper;
+    private Cloudinary cloudinary;
 
     public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/images/notices";
-
 
     @Override
     public NoticeResponseDTO create(NoticeRequestDto noticeRequestDto, MultipartFile file, String email) throws IOException {
@@ -51,24 +53,27 @@ public class NoticeServiceImpl implements NoticeService {
         notice.setDate(LocalDate.now());
 
         LocalTime time = LocalTime.now();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
         String formattedTime = time.format(formatter);
-
         notice.setTime(LocalTime.parse(formattedTime));
         notice.setUser(user);
 
-        String originalFilename = file.getOriginalFilename();
-        Path fileNameAndPath = Paths.get(uploadDirectory, originalFilename);
-        Files.write(fileNameAndPath, file.getBytes());
-        notice.setImagePath(originalFilename);
+        // Upload file to Cloudinary
+        Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), null);
+        String imageUrl = (String) uploadResult.get("url");
+        notice.setImagePath(imageUrl);
 
         noticeRepository.save(notice);
 
-        return NoticeResponseDTO.builder().id(notice.getId()).date(notice.getDate()).time(notice.getTime()).description(notice.getDescription()).imagePath(notice.getImagePath()).build();
-
+        return NoticeResponseDTO.builder()
+                .id(notice.getId())
+                .date(notice.getDate())
+                .time(notice.getTime())
+                .description(notice.getDescription())
+                .imagePath(notice.getImagePath())
+                .build();
     }
+
 
     @Override
     public List<NoticeResponseDTO> getAllNotice() {
