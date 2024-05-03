@@ -63,9 +63,9 @@ public class RouteController {
 
 
     @PutMapping(value = "/routes/{route_id}",headers = "VERSION=V1")
-    public RouteResponseDTO updateSpecificRoute(@PathVariable("route_id")Long routeId)throws RouteNotFoundException{
+    public RouteResponseDTO updateSpecificRoute(@PathVariable("route_id")Long routeId,@RequestBody RouteRequestDTO routeRequestDTO)throws RouteNotFoundException{
 
-        return routeService.updateSpecificRoute(routeId);
+        return routeService.updateSpecificRoute(routeId,routeRequestDTO);
 
     }
 

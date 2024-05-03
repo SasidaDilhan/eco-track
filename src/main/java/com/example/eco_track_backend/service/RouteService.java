@@ -22,5 +22,5 @@ public interface RouteService {
 
     RouteResponseDTO getSpecificRoute(Long routeId)throws RouteNotFoundException;
 
-    RouteResponseDTO updateSpecificRoute(Long routeId)throws RouteNotFoundException;
+    RouteResponseDTO updateSpecificRoute(Long routeId,RouteRequestDTO routeRequestDTO)throws RouteNotFoundException;
 }
