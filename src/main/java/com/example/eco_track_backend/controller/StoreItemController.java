@@ -39,7 +39,7 @@ public class StoreItemController {
 
     }
 //    @RolesAllowed("ADMIN")
-    @GetMapping( "/users/store_items")
+    @GetMapping("/users/store_items")
     public List<StoreItemResponseDTO> getAllItem()throws StoreItemNotFoundException{
 
         return storeItemService.getAllItems();
@@ -47,7 +47,7 @@ public class StoreItemController {
 
 
 
-    @GetMapping( "/users/{user_id}/store_items")
+    @GetMapping("/users/{user_id}/store_items")
     public List<StoreItemResponseDTO> getSpecificUserItems(@PathVariable("user_id")Long userId) throws UserNotFonudException, StoreItemNotFoundException {
 
       return storeItemService.getSpecificUserItems(userId);
