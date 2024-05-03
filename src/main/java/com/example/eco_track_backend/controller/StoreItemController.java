@@ -24,7 +24,7 @@ public class StoreItemController {
     private  StoreItemService storeItemService;
 
 //    @RolesAllowed("ADMIN")
-    @PostMapping(value = "/users/store_items",headers = "VERSION=V1")
+    @PostMapping("/users/store_items")
     public ResponseEntity<String> addStoreItem(@ModelAttribute StoreItemRequestDTO storeItemRequestDTO, @RequestParam("imagePath") MultipartFile file, Authentication authentication) throws StoreItemNotFoundException, UserNotFonudException, IOException {
 
         User user = (User) authentication.getPrincipal();
@@ -39,7 +39,7 @@ public class StoreItemController {
 
     }
 //    @RolesAllowed("ADMIN")
-    @GetMapping(value = "/users/store_items",headers = "VERSION=V1")
+    @GetMapping("/users/store_items")
     public List<StoreItemResponseDTO> getAllItem()throws StoreItemNotFoundException{
 
         return storeItemService.getAllItems();
@@ -47,7 +47,7 @@ public class StoreItemController {
 
 
 
-    @GetMapping(value = "/users/{user_id}/store_items",headers = "VERSION=V1")
+    @GetMapping("/users/{user_id}/store_items")
     public List<StoreItemResponseDTO> getSpecificUserItems(@PathVariable("user_id")Long userId) throws UserNotFonudException, StoreItemNotFoundException {
 
       return storeItemService.getSpecificUserItems(userId);
