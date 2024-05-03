@@ -55,6 +55,12 @@ public class NoticeController {
         return noticeService.getSpecificNotice2(noticeId);
     }
 
+    @DeleteMapping("/notices2/{notice_id}")
+    public NoticeRequestDto deleteSpecificNotice2(@PathVariable("notice_id")Long noticeId)throws NoticeNotFoundException{
+
+        return noticeService.deleteSpecificNotice2(noticeId);
+    }
+
 
 
 //    @RolesAllowed("ADMIN")
