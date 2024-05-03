@@ -45,6 +45,7 @@ public class NoticeController {
         return noticeService.getAllNotice();
     }
 
+    @RolesAllowed("ADMIN")
     @PutMapping("/notices/{notice_id}")
     public NoticeResponseDTO updateSpecificNotice(@PathVariable("notice_id")Long noticeId,@RequestBody NoticeRequestDto noticeRequestDto)throws NoticeNotFoundException {
 
@@ -53,12 +54,14 @@ public class NoticeController {
     }
 
 
+    @RolesAllowed("ADMIN")
     @GetMapping("/notices/{notice_id}")
     public NoticeResponseDTO getSpecificNotice(@PathVariable("notice_id")Long noticeId)throws NoticeNotFoundException{
 
         return noticeService.getSpecificNotice(noticeId);
     }
 
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/notices/{notice_id}")
     public NoticeResponseDTO deleteSpecificNotice(@PathVariable("notice_id")Long noticeId)throws NoticeNotFoundException{
 
