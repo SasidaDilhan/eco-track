@@ -175,7 +175,7 @@ public class StoreItemServiceImpl implements StoreItemService {
     }
 
     @Override
-    public StoreItemResponseDTO updateSpecificUserSpecificItems(Long userId, Long storeItemId,StoreItemRequestDTO storeItemRequestDTO) throws UserNotFonudException, StoreItemNotFoundException {
+    public StoreItemResponseDTO updateSpecificUserSpecificItems(Long userId, Long storeItemId,StoreItemRequestDTO storeItemRequestDTO,MultipartFile file) throws UserNotFonudException, StoreItemNotFoundException,IOException {
 
 
         User user = userRepository.findById(userId).orElseThrow(
@@ -190,11 +190,12 @@ public class StoreItemServiceImpl implements StoreItemService {
             throw new StoreItemNotFoundException("store items not found");
         };
 
-        updateToItem.setDescription(storeItemRequestDTO.getDescription());
-        updateToItem.setImagePath(String.valueOf(storeItemRequestDTO.getImagePath()));
-        updateToItem.setName(storeItemRequestDTO.getName());
-        updateToItem.setQuantity(storeItemRequestDTO.getQuantity());
-        updateToItem.setPrice(storeItemRequestDTO.getPrice());
+        modelMapper.map(storeItemRequestDTO,updateToItem);
+
+        // Upload file to Cloudinary
+        Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), null);
+        String imageUrl = (String) uploadResult.get("url");
+        updateToItem.setImagePath(imageUrl);
 
         storeItemRepository.save(updateToItem);
 
