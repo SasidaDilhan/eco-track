@@ -117,6 +117,8 @@ public class NoticeServiceImpl implements NoticeService {
         // Update notice details from DTO
         modelMapper.map(noticeRequestDto, notice);
 
+
+
         // Update date and time
         notice.setDate(LocalDate.now());
         notice.setTime(LocalTime.now());
@@ -126,6 +128,9 @@ public class NoticeServiceImpl implements NoticeService {
             Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), null);
             String imageUrl = (String) uploadResult.get("url");
             notice.setImagePath(imageUrl);
+
+            System.out.println("image url  ================     ");
+            System.out.println(imageUrl);
         }
 
         // Save the updated notice
