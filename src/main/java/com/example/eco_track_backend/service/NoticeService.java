@@ -33,5 +33,7 @@ public interface NoticeService {
 
     NoticeRequestDto deleteSpecificNotice2(Long noticeId)throws NoticeNotFoundException;
 
+    NoticeResponseDTO updateSpecificNotice2(Long noticeId, NoticeRequestDto noticeRequestDto, MultipartFile file)throws NoticeNotFoundException,IOException;
+
 //    NoticeResponseDTO updateSpecificNotice2(Long noticeId, NoticeRequestDto noticeRequestDto, MultipartFile file) throws NoticeNotFoundException, IOException;
 }

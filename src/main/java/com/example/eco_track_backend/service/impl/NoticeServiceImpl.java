@@ -108,6 +108,38 @@ public class NoticeServiceImpl implements NoticeService {
         return null;
     }
 
+    @Override
+    public NoticeResponseDTO updateSpecificNotice2(Long noticeId, NoticeRequestDto noticeRequestDto, MultipartFile file) throws NoticeNotFoundException, IOException {
+
+        Notice notice = noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new NoticeNotFoundException("Notice with ID " + noticeId + " not found"));
+
+        // Update notice details from DTO
+        modelMapper.map(noticeRequestDto, notice);
+
+        // Update date and time
+        notice.setDate(LocalDate.now());
+        notice.setTime(LocalTime.now());
+
+        if (file != null && !file.isEmpty()) {
+            // Upload file to Cloudinary if file is present
+            Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), null);
+            String imageUrl = (String) uploadResult.get("url");
+            notice.setImagePath(imageUrl);
+        }
+
+        // Save the updated notice
+        noticeRepository.save(notice);
+
+        return NoticeResponseDTO.builder()
+                .id(notice.getId())
+                .date(notice.getDate())
+                .time(notice.getTime())
+                .description(notice.getDescription())
+                .imagePath(notice.getImagePath())
+                .build();
+    }
+
 
 }
 
