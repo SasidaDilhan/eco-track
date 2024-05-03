@@ -1,5 +1,6 @@
 package com.example.eco_track_backend.service.impl;
 
+import com.cloudinary.Cloudinary;
 import com.example.eco_track_backend.exceptions.StoreItemNotFoundException;
 import com.example.eco_track_backend.exceptions.UserNotFonudException;
 import com.example.eco_track_backend.model.StoreItem;
@@ -19,9 +20,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,10 +35,11 @@ public class StoreItemServiceImpl implements StoreItemService {
     private final StoreItemRepository storeItemRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private Cloudinary cloudinary;
 
 
     @Override
-    public ResponseEntity<StoreItem> addStoreItem(StoreItemRequestDTO storeItemRequestDTO, String email) throws StoreItemNotFoundException, UserNotFonudException {
+    public ResponseEntity<StoreItem> addStoreItem(StoreItemRequestDTO storeItemRequestDTO, String email, MultipartFile file) throws StoreItemNotFoundException, UserNotFonudException, IOException {
 
         User user = userRepository.findUserByEmail(email).orElseThrow(
                 ()-> new UsernameNotFoundException("that user not in a database")
@@ -43,6 +48,11 @@ public class StoreItemServiceImpl implements StoreItemService {
         StoreItem storeItem = modelMapper.map(storeItemRequestDTO,StoreItem.class);
 
         storeItem.setUser(user);
+
+        // Upload file to Cloudinary
+        Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), null);
+        String imageUrl = (String) uploadResult.get("url");
+        storeItem.setImagePath(imageUrl);
 
         storeItemRepository.save(storeItem);
 
@@ -71,6 +81,7 @@ public class StoreItemServiceImpl implements StoreItemService {
             storeItemResponseDTO.setName(storeItem.getName());
             storeItemResponseDTO.setQuantity(storeItem.getQuantity());
             storeItemResponseDTO.setUser(storeItem.getUser().getId());
+            storeItemResponseDTO.setImagePath(storeItem.getImagePath());
 
             storeItemResponseDTOList.add(storeItemResponseDTO);
         }
@@ -180,7 +191,7 @@ public class StoreItemServiceImpl implements StoreItemService {
         };
 
         updateToItem.setDescription(storeItemRequestDTO.getDescription());
-        updateToItem.setImagePath(storeItemRequestDTO.getImagePath());
+        updateToItem.setImagePath(String.valueOf(storeItemRequestDTO.getImagePath()));
         updateToItem.setName(storeItemRequestDTO.getName());
         updateToItem.setQuantity(storeItemRequestDTO.getQuantity());
         updateToItem.setPrice(storeItemRequestDTO.getPrice());
