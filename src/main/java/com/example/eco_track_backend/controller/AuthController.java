@@ -8,10 +8,13 @@ import com.example.eco_track_backend.model.User;
 import com.example.eco_track_backend.repository.TruckDriverRepository;
 import com.example.eco_track_backend.repository.UserRepository;
 import com.example.eco_track_backend.request.UserAuthRequestDTO;
+import com.example.eco_track_backend.response.TruckDriverLoginResponse;
 import com.example.eco_track_backend.response.UserLoginResponseDTO;
 import com.example.eco_track_backend.security.JwtService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +33,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping(value = "/authenticate",headers = "VERSION=V1")
-    public UserLoginResponseDTO authenticate(@RequestBody UserAuthRequestDTO requestDTO) throws InvalidCredentialsException, UserNotFonudException, TruckDriverNotFoundException {
+    public ResponseEntity<Object> authenticate(@RequestBody UserAuthRequestDTO requestDTO) throws InvalidCredentialsException, UserNotFonudException, TruckDriverNotFoundException {
         System.out.println(" ====authenticate user " + requestDTO.getUsername());
 
         String email = requestDTO.getUsername();
@@ -47,7 +50,7 @@ public class AuthController {
             else {
                 TruckDriver truckDriverOne = truckDriverOptional.get();
                 roles.add("ROLE_"+truckDriverOne.getRole());
-
+                System.out.println("driver ek ethule");
                 String hashedPassword = passwordEncoder.encode(requestDTO.getPassword());
                 //authenticated user
                 User user = new User();
@@ -66,11 +69,16 @@ public class AuthController {
                 extraClaims.put("password", user.getPassword());
                 extraClaims.put("name", user.getName());
 
+                TruckDriver loggedInDriverDetails = truckDriverRepository.findTruckDriverByEmail(requestDTO.getUsername())
+                        .orElseThrow(() -> new EntityNotFoundException("user not found"));
 
                 String token = jwtService.generateToken(user, extraClaims);
-                return UserLoginResponseDTO.builder()
+
+                TruckDriverLoginResponse truckDriverLoginResponse = TruckDriverLoginResponse.builder()
                         .token(token)
+                        .truckDriver(loggedInDriverDetails)
                         .build();
+                return new ResponseEntity<>(truckDriverLoginResponse, HttpStatus.OK);
             }
         }
         else {
@@ -102,10 +110,13 @@ public class AuthController {
 
 
             String token = jwtService.generateToken(user, extraClaims);
-            return UserLoginResponseDTO.builder()
+
+            UserLoginResponseDTO userLoginResponseDTO = UserLoginResponseDTO.builder()
                     .token(token)
                     .user(loggedInUserDetails)
                     .build();
+
+            return new ResponseEntity<>(userLoginResponseDTO,HttpStatus.OK);
 
         }
     }

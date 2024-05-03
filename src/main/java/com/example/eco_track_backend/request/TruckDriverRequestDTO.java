@@ -18,7 +18,7 @@ public class TruckDriverRequestDTO {
     private String licenceNumber;
 
     @NotBlank(message = "Phone number cannot be blank")
-    @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
+//    @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
     private String phone;
 
     @NotBlank(message = "NIC cannot be blank")
@@ -26,7 +26,7 @@ public class TruckDriverRequestDTO {
     private String nic;
 
     @NotNull(message = "Age cannot be null")
-    @Size(min = 18, max = 99, message = "Age must be between 18 and 99")
+//    @Size(min = 18, max = 99, message = "Age must be between 18 and 99")
     private Integer age;
 
     @NotBlank(message = "Password cannot be blank")
