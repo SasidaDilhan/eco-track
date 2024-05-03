@@ -28,4 +28,6 @@ public interface NoticeService {
     NoticeResponseDTO create(NoticeRequestDto noticeRequestDto, MultipartFile file, String email)throws IOException;
 
     List<NoticeResponseDTO> getAllNotice();
+
+    NoticeResponseDTO getSpecificNotice2(Long noticeId)throws NoticeNotFoundException;
 }

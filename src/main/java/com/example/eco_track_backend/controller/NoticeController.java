@@ -48,6 +48,12 @@ public class NoticeController {
     }
 
 
+    @GetMapping("/notices2/{notice_id}")
+    public NoticeResponseDTO getSpecificNotice2(@PathVariable("notice_id")Long noticeId)throws NoticeNotFoundException{
+
+
+        return noticeService.getSpecificNotice2(noticeId);
+    }
 
 
 

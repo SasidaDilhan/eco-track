@@ -78,6 +78,17 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeList.stream().map(notice -> NoticeResponseDTO.builder().id(notice.getId()).description(notice.getDescription()).time(notice.getTime()).date(notice.getDate()).imagePath(notice.getImagePath()).build()).toList();
     }
 
+    @Override
+    public NoticeResponseDTO getSpecificNotice2(Long noticeId) throws NoticeNotFoundException {
+
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
+                ()-> new NoticeNotFoundException("that notice not in a database")
+
+        );
+
+        return NoticeResponseDTO.builder().id(notice.getId()).date(notice.getDate()).time(notice.getTime()).description(notice.getDescription()).imagePath(notice.getImagePath()).build();
+    }
+
 
 //    @Override
 //    public NoticeResponseDTO createNotice(NoticeRequestDto noticeRequestDto, String email) throws UserNotFonudException {
