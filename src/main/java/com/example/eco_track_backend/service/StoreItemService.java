@@ -6,11 +6,13 @@ import com.example.eco_track_backend.model.StoreItem;
 import com.example.eco_track_backend.request.StoreItemRequestDTO;
 import com.example.eco_track_backend.response.StoreItemResponseDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface StoreItemService {
-    ResponseEntity<StoreItem> addStoreItem(StoreItemRequestDTO storeItemRequestDTO, String email)throws StoreItemNotFoundException, UserNotFonudException;
+    ResponseEntity<StoreItem> addStoreItem(StoreItemRequestDTO storeItemRequestDTO, String email, MultipartFile file) throws StoreItemNotFoundException, UserNotFonudException, IOException;
 
     List<StoreItemResponseDTO> getAllItems()throws StoreItemNotFoundException;
 

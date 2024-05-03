@@ -12,7 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,7 +25,7 @@ public class StoreItemController {
 
 //    @RolesAllowed("ADMIN")
     @PostMapping(value = "/users/store_items",headers = "VERSION=V1")
-    public ResponseEntity<String> addStoreItem(@RequestBody StoreItemRequestDTO storeItemRequestDTO, Authentication authentication) throws StoreItemNotFoundException, UserNotFonudException {
+    public ResponseEntity<String> addStoreItem(@ModelAttribute StoreItemRequestDTO storeItemRequestDTO, @RequestParam("imagePath") MultipartFile file, Authentication authentication) throws StoreItemNotFoundException, UserNotFonudException, IOException {
 
         User user = (User) authentication.getPrincipal();
 
@@ -31,7 +33,7 @@ public class StoreItemController {
 
         System.out.println("email  : "+email);
 
-        storeItemService.addStoreItem(storeItemRequestDTO,email);
+        storeItemService.addStoreItem(storeItemRequestDTO,email,file);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("item stored");
 

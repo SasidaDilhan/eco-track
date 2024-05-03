@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class StoreItemRequestDTO {
@@ -22,6 +23,6 @@ public class StoreItemRequestDTO {
 
     private String description;
 
-    private String imagePath;
+    private MultipartFile imagePath;
 
 }
