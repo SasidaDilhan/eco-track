@@ -67,8 +67,13 @@ public class DisposalPlaceServiceImpl implements DisposalPlaceService {
     @Override
     public DisposalPlaceResponseDTO getSpecificRouteSpecificDisposalPlace(Long disposalPlaceId, Long routeId) throws DisposalPlaceNotFoundException, RouteNotFoundException {
 
+    DisposalPlaces disposalPlaces = disposalPlaceRepository.findById(disposalPlaceId).orElseThrow(
+        ()-> new DisposalPlaceNotFoundException("that disposal place not in a database")
+    );
 
-        return null;
+    return DisposalPlaceResponseDTO.builder().id(disposalPlaces.getId()).route(disposalPlaces.getRoute().getId()).name(disposalPlaces.getName()).longitude(disposalPlaces.getLongitude()).latitude(disposalPlaces.getLongitude()).build();
+
+
     }
 
 
