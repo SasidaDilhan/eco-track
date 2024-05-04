@@ -17,4 +17,6 @@ public interface DisposalPlaceService {
     List<DisposalPlaceResponseDTO> getAllDisposalPlace();
 
     DisposalPlaceResponseDTO getSpecificRouteSpecificDisposalPlace(Long disposalPlaceId, Long routeId)throws DisposalPlaceNotFoundException,RouteNotFoundException;
+
+    List<DisposalPlaceResponseDTO> getSpecificRouteDisposalPlaces(Long routeId)throws DisposalPlaceNotFoundException,RouteNotFoundException;
 }

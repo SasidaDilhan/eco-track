@@ -44,6 +44,13 @@ public class DisposalPlaceController {
 
     }
 
+    @GetMapping("/routes/{route_id}/disposalPlaces")
+    public List<DisposalPlaceResponseDTO> getSpecificRouteDisposalPlaces(@PathVariable("route_id")Long routeId)throws DisposalPlaceNotFoundException,RouteNotFoundException {
+
+        return disposalPlaceService.getSpecificRouteDisposalPlaces(routeId);
+
+    }
+
 
 //    @GetMapping("/routes/{route_id}/disposalPlaces")
 //    public DisposalPlaceResponseDTO getAllDisposalPlace(@RequestBody){
