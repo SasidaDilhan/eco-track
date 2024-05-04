@@ -67,8 +67,25 @@ public class DisposalPlaceServiceImpl implements DisposalPlaceService {
     @Override
     public DisposalPlaceResponseDTO getSpecificRouteSpecificDisposalPlace(Long disposalPlaceId, Long routeId) throws DisposalPlaceNotFoundException, RouteNotFoundException {
 
+    DisposalPlaces disposalPlaces = disposalPlaceRepository.findById(disposalPlaceId).orElseThrow(
+        ()-> new DisposalPlaceNotFoundException("that disposal place not in a database")
+    );
 
-        return null;
+    return DisposalPlaceResponseDTO.builder().id(disposalPlaces.getId()).route(disposalPlaces.getRoute().getId()).name(disposalPlaces.getName()).longitude(disposalPlaces.getLongitude()).latitude(disposalPlaces.getLongitude()).build();
+
+
+    }
+
+    @Override
+    public List<DisposalPlaceResponseDTO> getSpecificRouteDisposalPlaces(Long routeId) throws DisposalPlaceNotFoundException, RouteNotFoundException {
+
+        Route route = routeRepository.findById(routeId).orElseThrow(
+                ()-> new RouteNotFoundException("that route not in a database")
+        );
+
+        List<DisposalPlaces> disposalPlacesList = route.getDisposalPlacesList();
+
+      return   disposalPlacesList.stream().map(disposalPlaces -> DisposalPlaceResponseDTO.builder().id(disposalPlaces.getId()).name(disposalPlaces.getName()).latitude(disposalPlaces.getLatitude()).longitude(disposalPlaces.getLongitude()).route(disposalPlaces.getRoute().getId()).build()).toList();
     }
 
 
